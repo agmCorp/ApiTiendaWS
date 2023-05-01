@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+            
+    
+    <wb-module deploy-name="ApiTiendaEJB">
+                        
+        
+        <wb-resource deploy-path="/" source-path="/ejbModule" tag="defaultRootSource"/>
+                        
+        
+        <property name="java-output-path" value="/ApiTiendaEJB/build/classes"/>
+                        
+        
+        <property name="ClientProject" value="ApiTiendaEJBClient"/>
+                        
+        
+        <property name="ClientJARURI" value="ApiTiendaEJBClient.jar"/>
+                    
+    
+    </wb-module>
+        
+
+</project-modules>
