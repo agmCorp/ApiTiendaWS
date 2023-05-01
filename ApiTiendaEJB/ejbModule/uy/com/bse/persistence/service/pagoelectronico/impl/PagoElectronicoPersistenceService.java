@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceRef;
 
 import uy.com.bse.dto.common.ErrorDTO;
 import uy.com.bse.dto.common.FacturaDTO;
@@ -37,14 +38,16 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 	private static final String RUBRO_FACTURA = "F";
 	private static final String RUBRO_POLIZA = "P1";
 
+	// TODO ALVARO VER
+	@WebServiceRef(PagosElectronicos_Service.class)
 	private PagosElectronicos proxy;
 	private String user;
 	private String pwd;
 
 	@PostConstruct
 	private void init() {
-		PagosElectronicos_Service ws = new PagosElectronicos_Service();
-		proxy = ws.getPagosElectronicosPort();
+		//PagosElectronicos_Service ws = new PagosElectronicos_Service();
+		//proxy = ws.getPagosElectronicosPort();
 		Map<String, Object> requestCtx = ((BindingProvider) proxy).getRequestContext();
 		requestCtx.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getString(URL));
 		user = config.getString(USER);

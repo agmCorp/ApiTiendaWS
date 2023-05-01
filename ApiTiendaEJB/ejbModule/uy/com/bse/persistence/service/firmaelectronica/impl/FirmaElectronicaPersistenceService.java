@@ -1,4 +1,4 @@
-package uy.com.bse.persistence.service.firmaelectronica;
+package uy.com.bse.persistence.service.firmaelectronica.impl;
 
 import java.util.Map;
 
