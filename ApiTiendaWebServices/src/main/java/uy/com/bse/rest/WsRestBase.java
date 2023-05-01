@@ -19,37 +19,38 @@ import uy.com.bse.exception.WsException;
 import uy.com.bse.util.EntityError;
 
 public class WsRestBase {
-	private static final String CONFIG = "configError";
+	private static final String CONFIG_ERROR = "configError";
 	private static final String ERROR_INESPERADO_CODIGO = "errorInesperado.codigo";
 	private static final String ERROR_INESPERADO_MENSAJE = "errorInesperado.mensaje";
 
-	private ResourceBundle config = ResourceBundle.getBundle(CONFIG);
+	private ResourceBundle configError = ResourceBundle.getBundle(CONFIG_ERROR);
 
 	protected ErrorDTO getGenericError() {
-		return new ErrorDTO(config.getString(ERROR_INESPERADO_CODIGO), config.getString(ERROR_INESPERADO_MENSAJE),
+		return new ErrorDTO(configError.getString(ERROR_INESPERADO_CODIGO), configError.getString(ERROR_INESPERADO_MENSAJE),
 				true);
 	}
-	
+
 	protected Response getResponseOK(Object resp) {
 		ResponseBuilder builder = Response.ok();
 		builder.status(Status.OK);
 		builder.type(MediaType.APPLICATION_JSON);
 		builder.entity(resp);
-		
-		return builder.build();	
+
+		return builder.build();
 	}
-	
+
 	protected WsException businessExceptionToWsException(BusinessException e) {
 		// TODO ALVARO LOGUEAR LA BusinessException e aunque ya se loguea en capas abajo
 		ErrorDTO businessExceptionError = e.getError();
-		EntityError entityError = new EntityError(businessExceptionError.getErrorTraceNumber(), businessExceptionError.getMessage());
+		EntityError entityError = new EntityError(businessExceptionError.getErrorTraceNumber(),
+				businessExceptionError.getMessage());
 		ResponseBuilder builder = Response.serverError();
 		builder.status(businessExceptionError.getFatal() ? Status.INTERNAL_SERVER_ERROR : Status.BAD_REQUEST);
 		builder.type(MediaType.APPLICATION_JSON);
 		builder.entity(entityError);
 		return new WsException(builder.build());
 	}
-	
+
 	protected AccessToken getKeycloakAccessToken(SecurityContext securityContext) {
 		Principal userPricipal = securityContext.getUserPrincipal();
 		@SuppressWarnings("unchecked")

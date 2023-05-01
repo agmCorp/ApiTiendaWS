@@ -47,9 +47,9 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 
 	@PostConstruct
 	private void init() {
-		setEndpoint((BindingProvider) proxy, config.getString(URL));
-		user = config.getString(USER);
-		pwd = config.getString(PWD);
+		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
+		user = configSoap.getString(USER);
+		pwd = configSoap.getString(PWD);
 	}
 
 	private void procesarErrorEnRespuesta(String errorCodigo, String errorDescripcion, String internalMessage)

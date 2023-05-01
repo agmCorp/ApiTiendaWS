@@ -35,7 +35,7 @@ public class PolizasServiciosPersistenceService extends PersistenceService imple
 
 	@PostConstruct
 	private void init() {
-		setEndpoint((BindingProvider) proxy, config.getString(URL));
+		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
 	}
 
 	private void procesarErrorEnRespuesta(ResultGenerico errorResultGenerico, String internalMessage)

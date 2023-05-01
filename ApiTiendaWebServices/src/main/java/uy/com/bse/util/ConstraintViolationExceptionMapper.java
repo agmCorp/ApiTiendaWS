@@ -11,10 +11,10 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class ConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
-	private static final String CONFIG = "configError";
+	private static final String CONFIG_ERROR = "configError";
 	private static final String ERROR_INESPERADO_CODIGO = "errorConstraintViolation.codigo";
 
-	private ResourceBundle config = ResourceBundle.getBundle(CONFIG);
+	private ResourceBundle configError = ResourceBundle.getBundle(CONFIG_ERROR);
 	
     @Override
     public Response toResponse(ConstraintViolationException e) {
@@ -22,7 +22,7 @@ public class ConstraintViolationExceptionMapper implements ExceptionMapper<Const
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
         return Response.status(Response.Status.BAD_REQUEST)
-                .entity(new EntityError(config.getString(ERROR_INESPERADO_CODIGO), message))
+                .entity(new EntityError(configError.getString(ERROR_INESPERADO_CODIGO), message))
                 .build();
     }
 }

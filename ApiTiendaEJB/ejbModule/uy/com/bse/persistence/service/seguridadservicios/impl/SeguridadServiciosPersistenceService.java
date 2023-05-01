@@ -39,9 +39,9 @@ public class SeguridadServiciosPersistenceService extends PersistenceService imp
 
 	@PostConstruct
 	private void init() {
-		setEndpoint((BindingProvider) proxy, config.getString(URL));
-		appId = config.getString(APP_ID);
-		pwd = config.getString(PWD);
+		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
+		appId = configSoap.getString(APP_ID);
+		pwd = configSoap.getString(PWD);
 	}
 
 	private void procesarErrorEnRespuesta(ResultGenerico errorResultGenerico, String internalMessage)

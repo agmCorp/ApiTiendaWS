@@ -52,9 +52,9 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 
 	@PostConstruct
 	private void init() {
-		setEndpoint((BindingProvider) proxy, config.getString(URL));
-		user = config.getString(USER);
-		pwd = config.getString(PWD);
+		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
+		user = configSoap.getString(USER);
+		pwd = configSoap.getString(PWD);
 	}
 
 	private void procesarErrorEnRespuesta(ErrorTiendaResp errorTiendaResp, String internalMessage)

@@ -26,7 +26,7 @@ public class LoggingPersistenceInterceptor {
 			ic.proceed();
 		} catch (Exception e) {
 			logger.error("PERSISTENCIA - Error en PostConstruct " + clase, e);
-			throw e;
+			//throw e;
 		} finally {
 			logger.debug("PERSISTENCIA - Fin PostConstruct " + clase);
 		}

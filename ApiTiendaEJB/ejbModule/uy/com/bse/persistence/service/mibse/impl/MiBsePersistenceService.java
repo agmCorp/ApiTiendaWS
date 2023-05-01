@@ -39,7 +39,7 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 
 	@PostConstruct
 	private void init() {
-		setEndpoint((BindingProvider) proxy, config.getString(URL));
+		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
 	}
 
 	private void procesarErrorEnRespuesta(ResultGenerico errorResultGenerico, String internalMessage)
