@@ -1,7 +1,6 @@
 package uy.com.bse.persistence.service.pagoelectronico.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -28,28 +27,27 @@ import uy.com.bse.persistence.service.pagoelectronico.impl.map.EstadoTransaccion
 import uy.com.bse.persistence.service.pagoelectronico.impl.map.FacturaMap;
 import uy.com.bse.persistence.service.pagoelectronico.impl.map.InstFinancierasMap;
 import uy.com.bse.persistence.service.pagoelectronico.impl.map.MediosDePagoMap;
+import uy.com.bse.persistence.support.LoggingPersistenceInterceptorBinding;
 
 @Stateless
+@LoggingPersistenceInterceptorBinding
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class PagoElectronicoPersistenceService extends PersistenceService implements PagoElectronicoDAO {
 	private static final String URL = "pagoElectronico.url";
 	private static final String USER = "pagoElectronico.user";
 	private static final String PWD = "pagoElectronico.pwd";
 	private static final String RUBRO_FACTURA = "F";
-	private static final String RUBRO_POLIZA = "P1";
+	private static final String RUBRO_POLIZA = "P";
 
-	// TODO ALVARO VER
 	@WebServiceRef(PagosElectronicos_Service.class)
 	private PagosElectronicos proxy;
+	
 	private String user;
 	private String pwd;
 
 	@PostConstruct
 	private void init() {
-		//PagosElectronicos_Service ws = new PagosElectronicos_Service();
-		//proxy = ws.getPagosElectronicosPort();
-		Map<String, Object> requestCtx = ((BindingProvider) proxy).getRequestContext();
-		requestCtx.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getString(URL));
+		setEndpoint((BindingProvider) proxy, config.getString(URL));
 		user = config.getString(USER);
 		pwd = config.getString(PWD);
 	}
@@ -61,8 +59,6 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 		if (!errorCodigo.equals(RESULTADO_OK)) {
 			ErrorDTO errorDTO = new ErrorDTO(errorCodigo, errorDescripcion, false);
 			PersistException e = new PersistException(errorDTO, internalMessage);
-			// TODO ALVARO LOGUEAR **MI** EXCEPCION e
-			logger.error("xxx*****************bbbbbbbbbbbbbbbbbbbbbdfsabbbbbbbbbbbbbbbbbbbbb");
 			throw e;
 		}
 	}

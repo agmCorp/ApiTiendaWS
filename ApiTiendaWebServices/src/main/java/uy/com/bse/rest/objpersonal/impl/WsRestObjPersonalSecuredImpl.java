@@ -36,8 +36,8 @@ import uy.com.bse.util.DateHelper;
 public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implements WsRestObjPersonalSecured {
 
 	// TODO ALVARO OJO
-	@Inject
-	protected Logger logger;
+	//@Inject
+	//protected Logger logger;
 
 	@Override
 	public Response obtenerBancos(SecurityContext securityContext) {
@@ -57,7 +57,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 
 		try {
 			// TODO ALVARO
-			logger.error("ANTES DE INVOCAR!!!!!");
+			//logger.error("ANTES DE INVOCAR!!!!!");
 
 			resp = getFachada().getBancosYTarjetas();
 		} catch (BusinessException e) {

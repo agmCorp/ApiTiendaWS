@@ -2,13 +2,13 @@ package uy.com.bse.persistence.service.objpersonal.impl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceRef;
 
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.common.ErrorDTO;
@@ -33,25 +33,26 @@ import uy.com.bse.persistence.service.objpersonal.impl.map.EmisionObjPersonalMap
 import uy.com.bse.persistence.service.objpersonal.impl.map.PlanesCoberturaMap;
 import uy.com.bse.persistence.service.objpersonal.impl.map.TiposMovilidadMap;
 import uy.com.bse.persistence.service.objpersonal.impl.map.TiposObjetoMap;
+import uy.com.bse.persistence.support.LoggingPersistenceInterceptorBinding;
 import uy.com.bse.util.DateHelper;
 
 @Stateless
+@LoggingPersistenceInterceptorBinding
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class ObjPersonalPersistenceService extends PersistenceService implements ObjPersonalDAO {
 	private static final String URL = "objPersonal.url";
 	private static final String USER = "objPersonal.user";
 	private static final String PWD = "objPersonal.pwd";
 
+	@WebServiceRef(EmisionOPersonal.class)
 	private EmisionOPersonalTienda proxy;
+
 	private String user;
 	private String pwd;
 
 	@PostConstruct
 	private void init() {
-		EmisionOPersonal ws = new EmisionOPersonal();
-		proxy = ws.getEmisionOPersonalTiendaPort();
-		Map<String, Object> requestCtx = ((BindingProvider) proxy).getRequestContext();
-		requestCtx.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getString(URL));
+		setEndpoint((BindingProvider) proxy, config.getString(URL));
 		user = config.getString(USER);
 		pwd = config.getString(PWD);
 	}
@@ -64,7 +65,6 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			ErrorDTO errorDTO = new ErrorDTO(errorTiendaResp.getErrorCodigo(), errorTiendaResp.getErrorDescripcion(),
 					false);
 			PersistException e = new PersistException(errorDTO, internalMessage);
-			// TODO ALVARO LOGUEAR **MI** EXCEPCION e
 			throw e;
 		}
 	}
@@ -138,7 +138,8 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			Integer nroCertificado) throws PersistException {
 		ClienteDeudaTiendaResp resp = null;
 		try {
-			resp = proxy.controlarClienteConDeuda(user, pwd, tipoDocumento, documento, nroCotizacion.intValue(), nroCertificado);
+			resp = proxy.controlarClienteConDeuda(user, pwd, tipoDocumento, documento, nroCotizacion.intValue(),
+					nroCertificado);
 		} catch (Exception e) {
 			procesarWSFault(e, "Fault en persistencia getClienteDeuda");
 		}

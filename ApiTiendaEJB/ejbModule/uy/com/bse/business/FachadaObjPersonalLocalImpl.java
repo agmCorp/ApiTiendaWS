@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import uy.com.bse.business.support.LoggingBusinessInterceptorBinding;
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.common.FacturaDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
@@ -31,6 +32,7 @@ import uy.com.bse.persistence.service.polizasservicios.dao.PolizasServiciosDAO;
 import uy.com.bse.persistence.service.seguridadservicios.dao.SeguridadServiciosDAO;
 
 @Stateless
+@LoggingBusinessInterceptorBinding
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class FachadaObjPersonalLocalImpl extends Fachada implements FachadaObjPersonalLocal {
 	@EJB

@@ -1,7 +1,5 @@
 package uy.com.bse.persistence.service.mibse.impl;
 
-import java.util.Map;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.annotation.PostConstruct;
@@ -10,6 +8,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.mail.util.ByteArrayDataSource;
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceRef;
 
 import uy.com.bse.dto.common.ErrorDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
@@ -27,20 +26,20 @@ import uy.com.bse.persistence.proxy.mibse.WsServiciosMiBse;
 import uy.com.bse.persistence.service.PersistenceService;
 import uy.com.bse.persistence.service.mibse.dao.MiBseDAO;
 import uy.com.bse.persistence.service.mibse.impl.map.NumeroClienteMap;
+import uy.com.bse.persistence.support.LoggingPersistenceInterceptorBinding;
 
 @Stateless
+@LoggingPersistenceInterceptorBinding
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class MiBsePersistenceService extends PersistenceService implements MiBseDAO {
 	private static final String URL = "miBse.url";
 
+	@WebServiceRef(WsServiciosMiBse.class)
 	private IWsServiciosMiBse proxy;
 
 	@PostConstruct
 	private void init() {
-		WsServiciosMiBse ws = new WsServiciosMiBse();
-		proxy = ws.getWsServiciosMiBsePort();
-		Map<String, Object> requestCtx = ((BindingProvider) proxy).getRequestContext();
-		requestCtx.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getString(URL));
+		setEndpoint((BindingProvider) proxy, config.getString(URL));
 	}
 
 	private void procesarErrorEnRespuesta(ResultGenerico errorResultGenerico, String internalMessage)
@@ -51,7 +50,6 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 			ErrorDTO errorDTO = new ErrorDTO(String.valueOf(serviciosError.getCodigo()),
 					serviciosError.getDescripcion(), false);
 			PersistException e = new PersistException(errorDTO, internalMessage);
-			// TODO ALVARO LOGUEAR **MI** EXCEPCION e
 			throw e;
 		}
 	}

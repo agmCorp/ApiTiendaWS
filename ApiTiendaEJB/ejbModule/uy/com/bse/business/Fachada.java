@@ -7,7 +7,6 @@ public class Fachada {
 	
 	protected void procesarPersistException(PersistException e, String internalMessage) throws BusinessException {
 		BusinessException be = new BusinessException(e.getError(), internalMessage, e);
-		// TODO ALVARO LOGUEAR MI EXCEPCION e
 		throw be;
 	}
 }
