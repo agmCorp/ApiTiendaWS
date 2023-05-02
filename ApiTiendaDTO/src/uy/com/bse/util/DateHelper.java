@@ -37,6 +37,7 @@ public class DateHelper {
 		Date result = null;
 		if (date != null && pattern != null && !date.isEmpty() && !pattern.isEmpty()) {
 			SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+			formatter.setLenient(false);
 			result = formatter.parse(date);
 		}
 		return result;
@@ -46,6 +47,7 @@ public class DateHelper {
 		String result = null;
 		if (date != null && pattern != null && !pattern.isEmpty()) {
 			SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+			formatter.setLenient(false);
 			result = formatter.format(date);
 		}
 

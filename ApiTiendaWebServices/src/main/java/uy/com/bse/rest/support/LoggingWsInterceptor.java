@@ -30,9 +30,10 @@ public class LoggingWsInterceptor {
 					+ entityError.getErrorTraceNumber() + ", message: " + entityError.getMessage();
 			
 			if (wse.getCause() != null) {
-				logger.error(TAG + message);	
+				logger.error(TAG + message, wse.getCause());
+					
 			} else {
-				logger.error(TAG + message, wse);
+				logger.error(TAG + message);
 			}
 			throw wse;
 		}
