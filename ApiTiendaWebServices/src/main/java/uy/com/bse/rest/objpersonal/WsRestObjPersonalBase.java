@@ -12,7 +12,6 @@ public class WsRestObjPersonalBase extends WsRestBase {
 	private FachadaObjPersonalLocal fachada;
 
 	protected FachadaObjPersonalLocal getFachada() throws BusinessException {
-		// TODO ALVARO LOGUEAR CREO O SACAR ESTO
 		if (fachada == null) {
 			throw new BusinessException(getGenericError(), "Error al crear FachadaObjPersonalLocal");
 		}

@@ -40,7 +40,6 @@ public class WsRestBase {
 	}
 
 	protected WsException businessExceptionToWsException(BusinessException e) {
-		// TODO ALVARO LOGUEAR LA BusinessException e aunque ya se loguea en capas abajo
 		ErrorDTO businessExceptionError = e.getError();
 		EntityError entityError = new EntityError(businessExceptionError.getErrorTraceNumber(),
 				businessExceptionError.getMessage());
@@ -51,9 +50,7 @@ public class WsRestBase {
 		return new WsException(builder.build());
 	}
 
-	// TODO ALVARO VER SI HAGO ESTO
 	protected WsException exceptionToWsException(Exception e) {
-		// TODO ALVARO LOGUEAR LA Exception
 		ErrorDTO errorDTO = getGenericError();
 		EntityError entityError = new EntityError(errorDTO.getErrorTraceNumber(), errorDTO.getMessage());
 		ResponseBuilder builder = Response.serverError();

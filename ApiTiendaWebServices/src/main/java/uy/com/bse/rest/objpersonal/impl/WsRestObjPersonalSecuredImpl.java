@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -31,21 +29,21 @@ import uy.com.bse.rest.objpersonal.WsRestObjPersonalSecured;
 import uy.com.bse.rest.objpersonal.param.ParamAdhesionFacturaDigitalDTO;
 import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
+import uy.com.bse.rest.support.LoggingWsInterceptorBinding;
 import uy.com.bse.util.DateHelper;
 
+@LoggingWsInterceptorBinding
 public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implements WsRestObjPersonalSecured {
-
-	// TODO ALVARO OJO
-	//@Inject
-	//protected Logger logger;
 
 	@Override
 	public Response obtenerBancos(SecurityContext securityContext) {
 		List<InstFinancieraDTO> resp = null;
 		try {
 			resp = getFachada().getBancos();
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -56,12 +54,11 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		List<InstFinancieraDTO> resp = null;
 
 		try {
-			// TODO ALVARO
-			//logger.error("ANTES DE INVOCAR!!!!!");
-
 			resp = getFachada().getBancosYTarjetas();
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -73,8 +70,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 
 		try {
 			resp = getFachada().getMediosDePago();
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -90,8 +89,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 					Long.valueOf(paramEmisionDTO.getNroCotizacion()), Integer.valueOf(paramEmisionDTO.getPlanPago()),
 					DateHelper.stringToDate(paramEmisionDTO.getFechaFactura(), DateHelper.HYPHEN_YEAR_FIRST),
 					paramEmisionDTO.getConsumoFinal());
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -105,8 +106,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		try {
 			resp = getFachada().controlarClienteConDeuda(tipoDocumento, documento, Long.valueOf(nroCotizacion),
 					Integer.valueOf(nroCertificado));
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -118,8 +121,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 
 		try {
 			resp = getFachada().getEstadoTransaccion(idTransaccion);
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -131,13 +136,12 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 
 		try {
 			resp = getFachada().getFactura(Long.valueOf(nroFactura));
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
-		} catch(Exception ex) { // TODO ALVARO PONERLO EN TODOS LADOS POR LAS DUDAS?
-			throw exceptionToWsException(ex);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
-		
 		return getResponseOK(resp);
 	}
 
@@ -150,8 +154,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 					Integer.valueOf(paramFacturacionDTO.getCodRamo()),
 					Integer.valueOf(paramFacturacionDTO.getNroPoliza()), paramFacturacionDTO.getContemplaDias(),
 					DateHelper.stringToDate(paramFacturacionDTO.getFecha(), DateHelper.HYPHEN_YEAR_FIRST));
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -165,8 +171,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 					Integer.valueOf(paramAdhesionFacturaDigitalDTO.getCodRamo()),
 					Integer.valueOf(paramAdhesionFacturaDigitalDTO.getNroPoliza()),
 					Integer.valueOf(paramAdhesionFacturaDigitalDTO.getSucursal()));
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(new Object());
@@ -253,8 +261,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 
 		try {
 			resp = getFachada().getNumeroCliente(getUserLoggedIn(securityContext));
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -266,8 +276,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 
 		try {
 			resp = getFachada().getFirmaElectronica(textoPlano);
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);

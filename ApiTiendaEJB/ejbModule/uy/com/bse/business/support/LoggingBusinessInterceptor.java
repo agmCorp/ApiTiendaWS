@@ -40,18 +40,18 @@ public class LoggingBusinessInterceptor {
 		Object obj = null;
 		try {
 			obj = ic.proceed();
-		} catch (BusinessException pe) {
-			ErrorDTO errorDTO = pe.getError();
+		} catch (BusinessException be) {
+			ErrorDTO errorDTO = be.getError();
 			Boolean fatal = errorDTO.getFatal();
-			String message = metodo + ", traceNumber: " + errorDTO.getErrorTraceNumber()
+			String message = metodo + ", errorTraceNumber: " + errorDTO.getErrorTraceNumber()
 					+ ", message: " + errorDTO.getMessage() + ", fatal: " + errorDTO.getFatal() + ", internalMessage: "
-					+ pe.getMessage();
+					+ be.getMessage();
 			if (fatal) {
-				logger.error(TAG + "Error FATAL en método: " + message, pe);
+				logger.error(TAG + "Error FATAL en método: " + message, be);
 			} else {
 				logger.error(TAG + "Error NO FATAL en método: " + message);
 			}
-			throw pe;
+			throw be;
 		}
 		return obj;
 	}

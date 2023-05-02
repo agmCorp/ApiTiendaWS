@@ -10,7 +10,9 @@ import uy.com.bse.exception.BusinessException;
 import uy.com.bse.rest.objpersonal.WsRestObjPersonalBase;
 import uy.com.bse.rest.objpersonal.WsRestObjPersonalPublic;
 import uy.com.bse.rest.objpersonal.param.ParamCotizacionDTO;
+import uy.com.bse.rest.support.LoggingWsInterceptorBinding;
 
+@LoggingWsInterceptorBinding
 public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implements WsRestObjPersonalPublic {
 
 	@Override
@@ -19,8 +21,10 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 
 		try {
 			resp = getFachada().getPlanesCobertura();
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -32,8 +36,10 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 
 		try {
 			resp = getFachada().getTiposMovilidad();
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -45,8 +51,10 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 
 		try {
 			resp = getFachada().getTiposObjeto();
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);
@@ -60,8 +68,10 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 			resp = getFachada().cotizarAnonimo(paramCotizacionDTO.getPlanCobertura(),
 					paramCotizacionDTO.getTipoObjeto(), Double.valueOf(paramCotizacionDTO.getValorObjeto()),
 					paramCotizacionDTO.getMovilidad());
-		} catch (BusinessException e) {
-			throw businessExceptionToWsException(e);
+		} catch (BusinessException be) {
+			throw businessExceptionToWsException(be);
+		} catch (Exception e) {
+			throw exceptionToWsException(e);
 		}
 
 		return getResponseOK(resp);

@@ -51,7 +51,7 @@ public class LoggingPersistenceInterceptor {
 		} catch (PersistException pe) {
 			ErrorDTO errorDTO = pe.getError();
 			Boolean fatal = errorDTO.getFatal();
-			String message = metodo + ", traceNumber: " + errorDTO.getErrorTraceNumber() + ", message: "
+			String message = metodo + ", errorTraceNumber: " + errorDTO.getErrorTraceNumber() + ", message: "
 					+ errorDTO.getMessage() + ", fatal: " + errorDTO.getFatal() + ", internalMessage: "
 					+ pe.getMessage();
 			if (fatal) {
