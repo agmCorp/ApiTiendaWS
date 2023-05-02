@@ -189,6 +189,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		 * servicio soap usar constantes para todo en lugar de textos escritos por ahi
 		 * Esto recibe tantos archivos como campos fileField ponga en el form. writes
 		 * the whole File to the Memory causing a OOME
+		 * Debo hacer resize y todo lo que hace frontend.
 		 */
 		final String FORM_FILE_FIELD = "fileField";
 		final String JPEG_MIME_TYPE = "image/jpeg";
