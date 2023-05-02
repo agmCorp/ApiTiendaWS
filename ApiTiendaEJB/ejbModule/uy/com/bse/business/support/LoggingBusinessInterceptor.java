@@ -22,14 +22,11 @@ public class LoggingBusinessInterceptor {
 	public void postConstruct(InvocationContext ic) throws Exception {
 		String clase = ic.getTarget().getClass().getCanonicalName();
 
-		logger.debug(TAG + "Inicio PostConstruct " + clase);
 		try {
 			ic.proceed();
 		} catch (Exception e) {
 			logger.error(TAG + "Error en PostConstruct " + clase, e);
 			throw e;
-		} finally {
-			logger.debug(TAG + "Fin PostConstruct " + clase);
 		}
 	}
 

@@ -22,13 +22,10 @@ public class LoggingPersistenceInterceptor {
 	public void postConstruct(InvocationContext ic) throws Exception {
 		String clase = ic.getTarget().getClass().getCanonicalName();
 
-		logger.debug(TAG + "Inicio PostConstruct " + clase);
 		try {
 			ic.proceed();
 		} catch (Exception e) {
 			logger.error(TAG + "Error FATAL en PostConstruct, el componente no se pudo inicializar correctamente " + clase, e);
-		} finally {
-			logger.debug(TAG + "Fin PostConstruct " + clase);
 		}
 	}
 
