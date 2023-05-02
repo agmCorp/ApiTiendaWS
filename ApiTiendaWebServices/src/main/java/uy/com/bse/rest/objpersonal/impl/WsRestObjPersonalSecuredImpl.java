@@ -133,8 +133,11 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 			resp = getFachada().getFactura(Long.valueOf(nroFactura));
 		} catch (BusinessException e) {
 			throw businessExceptionToWsException(e);
+		} catch(Exception ex) { // TODO ALVARO PONERLO EN TODOS LADOS POR LAS DUDAS?
+			throw exceptionToWsException(ex);
 		}
 
+		
 		return getResponseOK(resp);
 	}
 
