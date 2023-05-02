@@ -36,14 +36,21 @@ public class SeguridadServiciosPersistenceService extends PersistenceService imp
 
 	private String appId;
 	private String pwd;
+	private Boolean initOK = false;
 
 	@PostConstruct
 	private void init() {
 		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
 		appId = configSoap.getString(APP_ID);
 		pwd = configSoap.getString(PWD);
+		initOK = true;
 	}
 
+	@Override
+	protected Boolean inicializacionCorrecta() {
+		return initOK;
+	}
+	
 	private void procesarErrorEnRespuesta(ResultGenerico errorResultGenerico, String internalMessage)
 			throws PersistException {
 		if (errorResultGenerico.isHayError()) {
@@ -57,6 +64,8 @@ public class SeguridadServiciosPersistenceService extends PersistenceService imp
 
 	@Override
 	public SeguridadServiciosDTO login(String seguridadServiciosUser) throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		ResultLogin resp = null;
 		try {
 			ParamLogin paramLogin = new ParamLogin();
@@ -68,11 +77,14 @@ public class SeguridadServiciosPersistenceService extends PersistenceService imp
 			procesarWSFault(e, "Fault en persistencia login");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia login");
+		
 		return LoginMap.map(resp);
 	}
 
 	@Override
 	public void logout(String seguridadServiciosUser, String tokenSeguridad) throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		ResultLogout resp = null;
 		try {
 			ParamLogout paramLogout = new ParamLogout();

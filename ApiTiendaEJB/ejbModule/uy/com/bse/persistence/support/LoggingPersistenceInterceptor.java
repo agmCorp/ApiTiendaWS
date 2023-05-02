@@ -25,8 +25,7 @@ public class LoggingPersistenceInterceptor {
 		try {
 			ic.proceed();
 		} catch (Exception e) {
-			logger.error("PERSISTENCIA - Error en PostConstruct " + clase, e);
-			//throw e;
+			logger.error("PERSISTENCIA - Error FATAL en PostConstruct, el componente no se pudo inicializar correctamente " + clase, e);
 		} finally {
 			logger.debug("PERSISTENCIA - Fin PostConstruct " + clase);
 		}
@@ -37,14 +36,28 @@ public class LoggingPersistenceInterceptor {
 		Long initTime = System.currentTimeMillis();
 		String metodo = ic.getTarget().getClass().getCanonicalName() + "." + ic.getMethod().getName();
 
+		/* TODO ALVARO
+		 * SEGUIR CON ESTO, ESTOY LOGUEANDO TODOS LOS PARAMETROS QUE RECIBEN LOS METODOS INTERCEPTADOS
+		 * FALTA VER COMO HAGO CUNADO USR O PWD SON NULL POR ERROR EN EL RESOURCEBUNDLE
+		 * FALTA PROBAR CON EXCEPCIONES Y ESO (FAULT Y DE NEGOCIO)
+		 * FALTA VER SI PONGO ESTO EN EL INTERCEPTOR BUSINESS (la verdad no me interesa tan arriba, prefiero aca abajo del todo)
+		 */
 		Object obj = null;
 		try {
+			Object[] params = ic.getParameters();
+			if (params.length > 0) {
+				String parametros = "";
+				for (Object param : params) {
+					parametros += "\"" + param + "\" ";
+				}
+				logger.debug("PERSISTENCIA - Los parámetros de " + metodo + " son: " + parametros.trim());
+			}
 			obj = ic.proceed();
 		} catch (PersistException pe) {
 			ErrorDTO errorDTO = pe.getError();
 			Boolean fatal = errorDTO.getFatal();
-			String message = metodo + ", traceNumber: " + errorDTO.getErrorTraceNumber()
-					+ ", message: " + errorDTO.getMessage() + ", fatal: " + errorDTO.getFatal() + ", internalMessage: "
+			String message = metodo + ", traceNumber: " + errorDTO.getErrorTraceNumber() + ", message: "
+					+ errorDTO.getMessage() + ", fatal: " + errorDTO.getFatal() + ", internalMessage: "
 					+ pe.getMessage();
 			if (fatal) {
 				logger.error("PERSISTENCIA - Error FATAL en método: " + message, pe);
@@ -54,7 +67,7 @@ public class LoggingPersistenceInterceptor {
 			throw pe;
 		} finally {
 			long diffTime = System.currentTimeMillis() - initTime;
-			logger.debug("PERSISTENCIA - PROXY " + metodo + " LATENCIA " + diffTime + " milisegundos");
+			logger.debug("PERSISTENCIA - PROXY " + metodo + " latencia " + diffTime + " milisegundos");
 		}
 		return obj;
 	}

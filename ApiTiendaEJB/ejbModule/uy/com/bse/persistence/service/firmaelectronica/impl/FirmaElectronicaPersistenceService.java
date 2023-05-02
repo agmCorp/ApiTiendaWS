@@ -31,12 +31,19 @@ public class FirmaElectronicaPersistenceService extends PersistenceService imple
 	
 	private String user;
 	private String pwd;
+	private Boolean initOK = false;
+	
+	@Override
+	protected Boolean inicializacionCorrecta() {
+		return initOK;
+	}
 
 	@PostConstruct
 	private void init() {
 		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
 		user = configSoap.getString(USER);
 		pwd = configSoap.getString(PWD);
+		initOK = true;
 	}
 
 	private void procesarErrorEnRespuesta(String errorCodigo, String errorDescripcion, String internalMessage)
@@ -52,6 +59,8 @@ public class FirmaElectronicaPersistenceService extends PersistenceService imple
 
 	@Override
 	public FirmaElectronicaDTO getFirmaElectronica(String textoPlano) throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		FirmaTxtResp resp = null;
 		try {
 			resp = proxy.firmarTexto(user, pwd, textoPlano);
@@ -60,6 +69,7 @@ public class FirmaElectronicaPersistenceService extends PersistenceService imple
 		}
 		procesarErrorEnRespuesta(resp.getCodigoError(), resp.getDescripcionError(),
 				"Respuesta con error en persistencia getFirmaElectronica");
+		
 		return FirmaElectronicaMap.map(resp);
 	}
 }

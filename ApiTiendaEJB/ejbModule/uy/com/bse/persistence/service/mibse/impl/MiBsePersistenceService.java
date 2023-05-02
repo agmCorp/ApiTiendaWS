@@ -36,10 +36,18 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 
 	@WebServiceRef(WsServiciosMiBse.class)
 	private IWsServiciosMiBse proxy;
-
+	
+	private Boolean initOK = false;
+	
 	@PostConstruct
 	private void init() {
 		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
+		initOK = true;
+	}
+
+	@Override
+	protected Boolean inicializacionCorrecta() {
+		return initOK;
 	}
 
 	private void procesarErrorEnRespuesta(ResultGenerico errorResultGenerico, String internalMessage)
@@ -57,6 +65,8 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 	@Override
 	public void adherirFacturaDigital(String seguridadServiciosUser, String tokenSeguridad, Integer codRamo,
 			Integer nroPoliza, Integer sucursal) throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		ResultAdherirFacturaDigital resp = null;
 		try {
 			ParamAdherirFacturaDigital param = new ParamAdherirFacturaDigital();
@@ -76,6 +86,8 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 	@Override
 	public void subirArchivo(String seguridadServiciosUser, String tokenSeguridad, String nombreArchivo, byte[] archivo,
 			String mimeType) throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		ResultSubirArchivo resp = null;
 		try {
 			ParamSubirArchivo param = new ParamSubirArchivo();
@@ -97,6 +109,8 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 	@Override
 	public NumeroClienteDTO getNumeroCliente(String seguridadServiciosUser, String tokenSeguridad)
 			throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		ResultObtenerNumeroCliente resp = null;
 		try {
 			ParamObtenerNumeroCliente param = new ParamObtenerNumeroCliente();
@@ -108,6 +122,7 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 			procesarWSFault(e, "Fault en persistencia getNumeroCliente");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia getNumeroCliente");
+		
 		return NumeroClienteMap.map(resp);
 	}
 }

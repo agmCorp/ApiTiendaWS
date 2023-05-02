@@ -32,12 +32,20 @@ public class PolizasServiciosPersistenceService extends PersistenceService imple
 
 	@WebServiceRef(WsServiciosPolizas.class)
 	private IWsServiciosPolizas proxy;
+	
+	private Boolean initOK = false;
 
 	@PostConstruct
 	private void init() {
 		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
+		initOK = true;
 	}
 
+	@Override
+	protected Boolean inicializacionCorrecta() {
+		return initOK;
+	}
+	
 	private void procesarErrorEnRespuesta(ResultGenerico errorResultGenerico, String internalMessage)
 			throws PersistException {
 
@@ -54,6 +62,8 @@ public class PolizasServiciosPersistenceService extends PersistenceService imple
 	public NuevaFacturacionInteractivaDTO nuevaFacturacionInteractiva(String seguridadServiciosUser,
 			String tokenSeguridad, Integer codRamo, Integer nroPoliza, String contemplaDias, Date fecha)
 			throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		ResultNuevaFacturacionInteractiva resp = null;
 		try {
 			ParamNuevaFacturacionInteractiva param = new ParamNuevaFacturacionInteractiva();
@@ -69,6 +79,7 @@ public class PolizasServiciosPersistenceService extends PersistenceService imple
 			procesarWSFault(e, "Fault en persistencia nuevaFacturacionInteractiva");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia nuevaFacturacionInteractiva");
+		
 		return NuevaFacturacionInteractivaMap.map(resp);
 	}
 }

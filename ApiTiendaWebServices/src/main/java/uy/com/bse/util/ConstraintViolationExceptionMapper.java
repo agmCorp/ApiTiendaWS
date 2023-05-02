@@ -12,7 +12,8 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class ConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
 	private static final String CONFIG_ERROR = "configError";
-	private static final String ERROR_INESPERADO_CODIGO = "errorConstraintViolation.codigo";
+	private static final String ERROR_REGLA_VALIDACION_CODIGO = "errorReglaValidacion.codigo";
+	private static final String ERROR_REGLA_VALIDACION_MENSAJE = "errorReglaValidacion.mensaje";
 
 	private ResourceBundle configError = ResourceBundle.getBundle(CONFIG_ERROR);
 	
@@ -22,7 +23,7 @@ public class ConstraintViolationExceptionMapper implements ExceptionMapper<Const
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
         return Response.status(Response.Status.BAD_REQUEST)
-                .entity(new EntityError(configError.getString(ERROR_INESPERADO_CODIGO), message))
+                .entity(new EntityError(configError.getString(ERROR_REGLA_VALIDACION_CODIGO), configError.getString(ERROR_REGLA_VALIDACION_MENSAJE) + ": " + message))
                 .build();
     }
 }

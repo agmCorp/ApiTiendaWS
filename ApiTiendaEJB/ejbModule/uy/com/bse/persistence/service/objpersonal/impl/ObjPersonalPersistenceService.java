@@ -49,14 +49,21 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 
 	private String user;
 	private String pwd;
-
+	private Boolean initOK = false;
+	
 	@PostConstruct
 	private void init() {
 		setEndpoint((BindingProvider) proxy, configSoap.getString(URL));
 		user = configSoap.getString(USER);
 		pwd = configSoap.getString(PWD);
+		initOK = true;
 	}
 
+	@Override
+	protected Boolean inicializacionCorrecta() {
+		return initOK;
+	}
+	
 	private void procesarErrorEnRespuesta(ErrorTiendaResp errorTiendaResp, String internalMessage)
 			throws PersistException {
 		final String RESULTADO_OK = "00";
@@ -71,6 +78,8 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 
 	@Override
 	public List<CodigueraDTO> getPlanesCobertura() throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		PlanesCoberturaTiendaResp resp = null;
 		try {
 			resp = proxy.consultaPlanesCobertura(user, pwd);
@@ -78,11 +87,14 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			procesarWSFault(e, "Fault en persistencia getPlanesCobertura");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia getPlanesCobertura");
+		
 		return PlanesCoberturaMap.map(resp);
 	}
 
 	@Override
 	public List<CodigueraDTO> getTiposMovilidad() throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		TiposMovilidadTiendaResp resp = null;
 		try {
 			resp = proxy.consultaTiposMovilidad(user, pwd);
@@ -90,11 +102,14 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			procesarWSFault(e, "Fault en persistencia getTiposMovilidad");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia getTiposMovilidad");
+		
 		return TiposMovilidadMap.map(resp);
 	}
 
 	@Override
 	public List<CodigueraDTO> getTiposObjeto() throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		TiposObjetosTiendaResp resp = null;
 		try {
 			resp = proxy.consultaTiposObjetos(user, pwd);
@@ -102,12 +117,15 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			procesarWSFault(e, "Fault en persistencia getTiposObjeto");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia getTiposObjeto");
+		
 		return TiposObjetoMap.map(resp);
 	}
 
 	@Override
 	public CotizacionObjPersonalDTO cotizarAnonimo(String planCobertura, String tipoObjeto, Double valorObjeto,
 			String movilidad) throws PersistException {
+		procesarErrorEnInicializacion();	
+		
 		CotizacionOPersonalTiendaResp resp = null;
 		try {
 			resp = proxy.cotizarOPersonalAnonimo(user, pwd, planCobertura, tipoObjeto, valorObjeto, movilidad);
@@ -115,6 +133,7 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			procesarWSFault(e, "Fault en persistencia cotizarAnonimo");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia cotizarAnonimo");
+		
 		return CotizacionObjPersonalMap.map(resp);
 	}
 
@@ -122,6 +141,8 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 	public EmisionObjPersonalDTO emitir(String tipoDocumento, String documento, String marca, String serie,
 			String modelo, Long nroCotizacion, Integer planPago, Date fechaFactura, String consumoFinal)
 			throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		EmisionOPersonalTiendaResp resp = null;
 		try {
 			resp = proxy.emitirOPersonal(user, pwd, tipoDocumento, documento, marca, serie, modelo, nroCotizacion,
@@ -130,12 +151,15 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			procesarWSFault(e, "Fault en persistencia emitir");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia emitir");
+		
 		return EmisionObjPersonalMap.map(resp);
 	}
 
 	@Override
 	public ClienteDeudaDTO getClienteDeuda(String tipoDocumento, String documento, Long nroCotizacion,
 			Integer nroCertificado) throws PersistException {
+		procesarErrorEnInicializacion();
+		
 		ClienteDeudaTiendaResp resp = null;
 		try {
 			resp = proxy.controlarClienteConDeuda(user, pwd, tipoDocumento, documento, nroCotizacion.intValue(),
@@ -144,6 +168,7 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 			procesarWSFault(e, "Fault en persistencia getClienteDeuda");
 		}
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia getClienteDeuda");
+		
 		return ClienteDeudaMap.map(resp);
 	}
 }
