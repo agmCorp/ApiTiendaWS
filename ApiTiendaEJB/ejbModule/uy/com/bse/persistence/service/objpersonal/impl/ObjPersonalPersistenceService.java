@@ -146,7 +146,7 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 		EmisionOPersonalTiendaResp resp = null;
 		try {
 			resp = proxy.emitirOPersonal(user, pwd, tipoDocumento, documento, marca, serie, modelo, nroCotizacion,
-					String.valueOf(planPago), DateHelper.dateToXMLGregorianCalendar(fechaFactura), consumoFinal);
+					String.valueOf(planPago), DateHelper.dateToXmlGregorianCalendar(fechaFactura), consumoFinal);
 		} catch (Exception e) {
 			procesarWSFault(e, "Fault en persistencia emitir");
 		}

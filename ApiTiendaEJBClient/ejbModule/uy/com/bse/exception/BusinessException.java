@@ -8,7 +8,7 @@ public class BusinessException extends Exception {
 	private ErrorDTO error;
 	
 	public BusinessException() {
-		super("Error en Servicio");
+		super("Error en negocio");
 	}
 
 	public BusinessException(ErrorDTO error) {

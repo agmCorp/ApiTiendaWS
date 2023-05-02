@@ -57,7 +57,7 @@ public class WsRestBase {
 		builder.status(Status.INTERNAL_SERVER_ERROR);
 		builder.type(MediaType.APPLICATION_JSON);
 		builder.entity(entityError);
-		return new WsException(builder.build());
+		return new WsException(e, builder.build());
 	}
 
 	protected AccessToken getKeycloakAccessToken(SecurityContext securityContext) {

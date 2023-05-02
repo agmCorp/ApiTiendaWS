@@ -9,5 +9,9 @@ public class WsException extends WebApplicationException {
 	public WsException(Response response) {
 		super(response);
 	}
+	
+	public WsException(Throwable t, Response response) {
+		super(t, response);
+	}
 }
  

@@ -15,22 +15,17 @@ public class DateHelper {
 	public static final String SLASH_YEAR_FIRST = "yyyy/MM/dd";
 	public static final String SLASH_YEAR_LAST = "dd/MM/yyyy";
 
-	public static XMLGregorianCalendar dateToXMLGregorianCalendar(Date date) {
+	public static XMLGregorianCalendar dateToXmlGregorianCalendar(Date date) throws DatatypeConfigurationException {
 		XMLGregorianCalendar result = null;
 		if (date != null) {
 			GregorianCalendar dateGregorian = new GregorianCalendar();
 			dateGregorian.setTime(date);
-			try {
-				result = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateGregorian);
-			} catch (DatatypeConfigurationException e) {
-				// TODO ALVARO LOGUEAR LA EXCEPTION
-				// LOG.error("Error en dateToXMLGregorianCalendar: " + e.getMessage());
-			}
+			result = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateGregorian);
 		}
 		return result;
 	}
 
-	public static Date XMLGregorianCalendarToDate(XMLGregorianCalendar date) {
+	public static Date xmlGregorianCalendarToDate(XMLGregorianCalendar date) {
 		Date result = null;
 		if (date != null) {
 			result = date.toGregorianCalendar().getTime();
@@ -38,16 +33,11 @@ public class DateHelper {
 		return result;
 	}
 
-	public static Date stringToDate(String date, String pattern) {
+	public static Date stringToDate(String date, String pattern) throws ParseException {
 		Date result = null;
 		if (date != null && pattern != null && !date.isEmpty() && !pattern.isEmpty()) {
-			SimpleDateFormat formatter = new SimpleDateFormat(pattern);				
-			try {
-				result = formatter.parse(date);
-			} catch (ParseException e) {
-				// TODO ALVARO LOGUEAR LA EXCEPTION
-				// LOG.error("Error en dateToXMLGregorianCalendar: " + e.getMessage());
-			}
+			SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+			result = formatter.parse(date);
 		}
 		return result;
 	}
@@ -65,7 +55,7 @@ public class DateHelper {
 	public static String xmlGregorianCalendarToString(XMLGregorianCalendar date, String pattern) {
 		String result = null;
 		if (date != null && pattern != null && !pattern.isEmpty()) {
-			result = dateToString(XMLGregorianCalendarToDate(date), pattern);
+			result = dateToString(xmlGregorianCalendarToDate(date), pattern);
 		}
 
 		return result;
