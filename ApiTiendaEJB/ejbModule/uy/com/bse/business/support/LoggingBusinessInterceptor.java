@@ -16,19 +16,20 @@ import uy.com.bse.exception.BusinessException;
 public class LoggingBusinessInterceptor {
 	@Inject
 	private Logger logger;
+	private static final String TAG = "NEGOCIO - ";
 
 	@PostConstruct
 	public void postConstruct(InvocationContext ic) throws Exception {
 		String clase = ic.getTarget().getClass().getCanonicalName();
 
-		logger.debug("NEGOCIO - Inicio PostConstruct " + clase);
+		logger.debug(TAG + "Inicio PostConstruct " + clase);
 		try {
 			ic.proceed();
 		} catch (Exception e) {
-			logger.error("NEGOCIO - Error en PostConstruct " + clase, e);
+			logger.error(TAG + "Error en PostConstruct " + clase, e);
 			throw e;
 		} finally {
-			logger.debug("NEGOCIO - Fin PostConstruct " + clase);
+			logger.debug(TAG + "Fin PostConstruct " + clase);
 		}
 	}
 
@@ -46,9 +47,9 @@ public class LoggingBusinessInterceptor {
 					+ ", message: " + errorDTO.getMessage() + ", fatal: " + errorDTO.getFatal() + ", internalMessage: "
 					+ pe.getMessage();
 			if (fatal) {
-				logger.error("NEGOCIO - Error FATAL en método: " + message, pe);
+				logger.error(TAG + "Error FATAL en método: " + message, pe);
 			} else {
-				logger.error("NEGOCIO - Error NO FATAL en método: " + message);
+				logger.error(TAG + "Error NO FATAL en método: " + message);
 			}
 			throw pe;
 		}

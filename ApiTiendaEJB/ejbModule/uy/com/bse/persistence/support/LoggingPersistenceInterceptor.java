@@ -16,18 +16,19 @@ import uy.com.bse.persistence.exception.PersistException;
 public class LoggingPersistenceInterceptor {
 	@Inject
 	private Logger logger;
-
+	private static final String TAG = "PERSISTENCIA - ";
+	
 	@PostConstruct
 	public void postConstruct(InvocationContext ic) throws Exception {
 		String clase = ic.getTarget().getClass().getCanonicalName();
 
-		logger.debug("PERSISTENCIA - Inicio PostConstruct " + clase);
+		logger.debug(TAG + "Inicio PostConstruct " + clase);
 		try {
 			ic.proceed();
 		} catch (Exception e) {
-			logger.error("PERSISTENCIA - Error FATAL en PostConstruct, el componente no se pudo inicializar correctamente " + clase, e);
+			logger.error(TAG + "Error FATAL en PostConstruct, el componente no se pudo inicializar correctamente " + clase, e);
 		} finally {
-			logger.debug("PERSISTENCIA - Fin PostConstruct " + clase);
+			logger.debug(TAG + "Fin PostConstruct " + clase);
 		}
 	}
 
@@ -36,12 +37,6 @@ public class LoggingPersistenceInterceptor {
 		Long initTime = System.currentTimeMillis();
 		String metodo = ic.getTarget().getClass().getCanonicalName() + "." + ic.getMethod().getName();
 
-		/* TODO ALVARO
-		 * SEGUIR CON ESTO, ESTOY LOGUEANDO TODOS LOS PARAMETROS QUE RECIBEN LOS METODOS INTERCEPTADOS
-		 * FALTA VER COMO HAGO CUNADO USR O PWD SON NULL POR ERROR EN EL RESOURCEBUNDLE
-		 * FALTA PROBAR CON EXCEPCIONES Y ESO (FAULT Y DE NEGOCIO)
-		 * FALTA VER SI PONGO ESTO EN EL INTERCEPTOR BUSINESS (la verdad no me interesa tan arriba, prefiero aca abajo del todo)
-		 */
 		Object obj = null;
 		try {
 			Object[] params = ic.getParameters();
@@ -50,7 +45,7 @@ public class LoggingPersistenceInterceptor {
 				for (Object param : params) {
 					parametros += "\"" + param + "\" ";
 				}
-				logger.debug("PERSISTENCIA - Los parámetros de " + metodo + " son: " + parametros.trim());
+				logger.debug(TAG + "Los parámetros de " + metodo + " son: " + parametros.trim());
 			}
 			obj = ic.proceed();
 		} catch (PersistException pe) {
@@ -60,14 +55,14 @@ public class LoggingPersistenceInterceptor {
 					+ errorDTO.getMessage() + ", fatal: " + errorDTO.getFatal() + ", internalMessage: "
 					+ pe.getMessage();
 			if (fatal) {
-				logger.error("PERSISTENCIA - Error FATAL en método: " + message, pe);
+				logger.error(TAG + "Error FATAL en método: " + message, pe);
 			} else {
-				logger.error("PERSISTENCIA - Error NO FATAL en método: " + message);
+				logger.error(TAG + "Error NO FATAL en método: " + message);
 			}
 			throw pe;
 		} finally {
 			long diffTime = System.currentTimeMillis() - initTime;
-			logger.debug("PERSISTENCIA - PROXY " + metodo + " latencia " + diffTime + " milisegundos");
+			logger.debug(TAG + "PROXY " + metodo + " latencia " + diffTime + " milisegundos");
 		}
 		return obj;
 	}
