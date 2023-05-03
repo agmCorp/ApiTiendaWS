@@ -1,5 +1,6 @@
 package uy.com.bse.rest.objpersonal.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -188,8 +189,8 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		 * existe debo devolver error si hay alguna ioexception luego debo llamar al
 		 * servicio soap usar constantes para todo en lugar de textos escritos por ahi
 		 * Esto recibe tantos archivos como campos fileField ponga en el form. writes
-		 * the whole File to the Memory causing a OOME
-		 * Debo hacer resize y todo lo que hace frontend.
+		 * the whole File to the Memory causing a OOME Debo hacer resize y todo lo que
+		 * hace frontend.
 		 */
 		final String FORM_FILE_FIELD = "fileField";
 		final String JPEG_MIME_TYPE = "image/jpeg";
@@ -246,8 +247,8 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 			}
 		}
 
-		/* TODO ALVARO
-		 * MultivaluedMap heades = part.getHeaders(); String CDHeader =
+		/*
+		 * TODO ALVARO MultivaluedMap heades = part.getHeaders(); String CDHeader =
 		 * heades.getFirst("Content-Disposition"); String fileName =""; Pattern p =
 		 * Pattern.compile("filename=\".*\""); Matcher m = p.matcher(CDHeader); if
 		 * (m.find()){ fileName = m.group(); }

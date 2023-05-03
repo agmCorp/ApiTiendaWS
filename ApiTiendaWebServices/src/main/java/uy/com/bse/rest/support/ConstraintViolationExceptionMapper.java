@@ -1,4 +1,4 @@
-package uy.com.bse.util;
+package uy.com.bse.rest.support;
 
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -8,6 +8,8 @@ import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+
+import uy.com.bse.util.EntityError;
 
 @Provider
 public class ConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
