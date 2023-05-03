@@ -13,14 +13,24 @@ public class WsRestObjPersonalBase extends WsRestBase {
 
 	protected FachadaObjPersonalLocal getFachada() throws BusinessException {
 		if (fachada == null) {
-			throw new BusinessException(getGenericError(), "Error al crear FachadaObjPersonalLocal");
+			throw getGenericWsException("Error al crear FachadaObjPersonalLocal"); 
 		}
 		return fachada;
 	}
 
+	// TODO ALVARO ACA NECESITO EL USUARIO LOGUEADO
 	protected String getUserLoggedIn(SecurityContext securityContext) {
-		// TODO ALVARO ACA NECESITO EL USUARIO LOGUEADO
 		// return getKeycloakAccessToken(securityContext).getPreferredUsername();
 		return "CI#49545150";
+	}
+
+	// TODO ALVARO ACA NECESITO EL USUARIO LOGUEADO
+	protected String getUserLoggedInTipoDoc(String userLoggedIn) {
+		return userLoggedIn.split("#")[0];
+	}
+
+	// TODO ALVARO ACA NECESITO EL USUARIO LOGUEADO
+	protected String getUserLoggedInDoc(String userLoggedIn) {
+		return userLoggedIn.split("#")[1];
 	}
 }

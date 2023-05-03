@@ -74,9 +74,13 @@ public interface WsRestObjPersonalSecured {
 			@Valid ParamAdhesionFacturaDigitalDTO paramAdhesionFacturaDigitalDTO);
 
 	@POST
-	@Path("/upload")
+	@Path("/upload/{nroCotizacion}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	Response uploadFile(@Context SecurityContext securityContext, MultipartFormDataInput input);
+	Response uploadFile(@Context SecurityContext securityContext,
+			
+			@Pattern(regexp = "\\d+", message = "El parámetro 'nroCotizacion' no es un número") @PathParam("nroCotizacion") String nroCotizacion,
+			
+			MultipartFormDataInput input);
 
 	@GET
 	@Path("/numero-cliente")

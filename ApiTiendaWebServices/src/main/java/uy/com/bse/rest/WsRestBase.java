@@ -25,11 +25,6 @@ public class WsRestBase {
 
 	private ResourceBundle configError = ResourceBundle.getBundle(CONFIG_ERROR);
 
-	protected ErrorDTO getGenericError() {
-		return new ErrorDTO(configError.getString(ERROR_INESPERADO_CODIGO),
-				configError.getString(ERROR_INESPERADO_MENSAJE), true);
-	}
-
 	protected Response getResponseOK(Object resp) {
 		ResponseBuilder builder = Response.ok();
 		builder.status(Status.OK);
@@ -39,7 +34,23 @@ public class WsRestBase {
 		return builder.build();
 	}
 
-	protected WsException businessExceptionToWsException(BusinessException e) {
+	protected EntityError getGenericError() {
+		return new EntityError(configError.getString(ERROR_INESPERADO_CODIGO),
+				configError.getString(ERROR_INESPERADO_MENSAJE));
+	}
+
+	protected WsException getGenericWsException(String internalMessage) {
+		EntityError entityError = getGenericError();
+		ResponseBuilder builder = Response.serverError();
+		builder.status(Status.INTERNAL_SERVER_ERROR);
+		builder.type(MediaType.APPLICATION_JSON);
+		builder.entity(entityError);
+		WsException wsException = new WsException(builder.build());
+		wsException.setInternalMessage(internalMessage);
+		return wsException;
+	}
+
+	protected WsException procesarBusinessException(BusinessException e, String internalMessage) {
 		ErrorDTO businessExceptionError = e.getError();
 		EntityError entityError = new EntityError(businessExceptionError.getErrorTraceNumber(),
 				businessExceptionError.getMessage());
@@ -47,19 +58,22 @@ public class WsRestBase {
 		builder.status(businessExceptionError.getFatal() ? Status.INTERNAL_SERVER_ERROR : Status.BAD_REQUEST);
 		builder.type(MediaType.APPLICATION_JSON);
 		builder.entity(entityError);
-		return new WsException(builder.build());
+		WsException wsException = new WsException(builder.build());
+		wsException.setInternalMessage(internalMessage);
+		return wsException;
 	}
 
-	protected WsException exceptionToWsException(Exception e) {
-		ErrorDTO errorDTO = getGenericError();
-		EntityError entityError = new EntityError(errorDTO.getErrorTraceNumber(), errorDTO.getMessage());
+	protected WsException procesarException(Exception e, String internalMessage) {
+		EntityError entityError = getGenericError();
 		ResponseBuilder builder = Response.serverError();
 		builder.status(Status.INTERNAL_SERVER_ERROR);
 		builder.type(MediaType.APPLICATION_JSON);
 		builder.entity(entityError);
-		return new WsException(e, builder.build());
+		WsException wsException = new WsException(e, builder.build());
+		wsException.setInternalMessage(internalMessage);
+		return wsException;
 	}
-
+	
 	protected AccessToken getKeycloakAccessToken(SecurityContext securityContext) {
 		Principal userPricipal = securityContext.getUserPrincipal();
 		@SuppressWarnings("unchecked")

@@ -17,14 +17,15 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 
 	@Override
 	public Response obtenerPlanesCobertura() {
+		String msgErr = "Error en servicio obtenerPlanesCobertura";
 		List<CodigueraDTO> resp = null;
 
 		try {
 			resp = getFachada().getPlanesCobertura();
 		} catch (BusinessException be) {
-			throw businessExceptionToWsException(be);
+			throw procesarBusinessException(be, msgErr);
 		} catch (Exception e) {
-			throw exceptionToWsException(e);
+			throw procesarException(e, msgErr);
 		}
 
 		return getResponseOK(resp);
@@ -32,14 +33,15 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 
 	@Override
 	public Response obtenerTiposMovilidad() {
+		String msgErr = "Error en servicio obtenerTiposMovilidad";
 		List<CodigueraDTO> resp = null;
 
 		try {
 			resp = getFachada().getTiposMovilidad();
 		} catch (BusinessException be) {
-			throw businessExceptionToWsException(be);
+			throw procesarBusinessException(be, msgErr);
 		} catch (Exception e) {
-			throw exceptionToWsException(e);
+			throw procesarException(e, msgErr);
 		}
 
 		return getResponseOK(resp);
@@ -47,14 +49,15 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 
 	@Override
 	public Response obtenerTiposObjeto() {
+		String msgErr = "Error en servicio obtenerTiposObjeto";
 		List<CodigueraDTO> resp = null;
 
 		try {
 			resp = getFachada().getTiposObjeto();
 		} catch (BusinessException be) {
-			throw businessExceptionToWsException(be);
+			throw procesarBusinessException(be, msgErr);
 		} catch (Exception e) {
-			throw exceptionToWsException(e);
+			throw procesarException(e, msgErr);
 		}
 
 		return getResponseOK(resp);
@@ -62,6 +65,7 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 
 	@Override
 	public Response cotizarAnonimo(ParamCotizacionDTO paramCotizacionDTO) {
+		String msgErr = "Error en servicio cotizarAnonimo";
 		CotizacionObjPersonalDTO resp = null;
 
 		try {
@@ -69,9 +73,9 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 					paramCotizacionDTO.getTipoObjeto(), Double.valueOf(paramCotizacionDTO.getValorObjeto()),
 					paramCotizacionDTO.getMovilidad());
 		} catch (BusinessException be) {
-			throw businessExceptionToWsException(be);
+			throw procesarBusinessException(be, msgErr);
 		} catch (Exception e) {
-			throw exceptionToWsException(e);
+			throw procesarException(e, msgErr);
 		}
 
 		return getResponseOK(resp);

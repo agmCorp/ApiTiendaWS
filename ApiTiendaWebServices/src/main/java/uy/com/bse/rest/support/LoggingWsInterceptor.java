@@ -27,11 +27,12 @@ public class LoggingWsInterceptor {
 		} catch (WsException wse) {
 			EntityError entityError = ((EntityError) wse.getResponse().getEntity());
 			String message = metodo + ", status response: " + wse.getMessage() + ", errorTraceNumber: "
-					+ entityError.getErrorTraceNumber() + ", message: " + entityError.getMessage();
-			
+					+ entityError.getErrorTraceNumber() + ", message: " + entityError.getMessage()
+					+ ", internalMessage: " + wse.getInternalMessage();
+
 			if (wse.getCause() != null) {
 				logger.error(TAG + message, wse.getCause());
-					
+
 			} else {
 				logger.error(TAG + message);
 			}
