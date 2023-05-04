@@ -73,7 +73,7 @@ public class WsRestBase {
 		wsException.setInternalMessage(internalMessage);
 		return wsException;
 	}
-	
+
 	protected AccessToken getKeycloakAccessToken(SecurityContext securityContext) {
 		Principal userPricipal = securityContext.getUserPrincipal();
 		@SuppressWarnings("unchecked")
