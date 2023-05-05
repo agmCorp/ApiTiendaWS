@@ -13,7 +13,7 @@ public class WsRestObjPersonalBase extends WsRestBase {
 	// TODO ALVARO ACA NECESITO EL USUARIO LOGUEADO
 	protected String getUserLoggedIn(SecurityContext securityContext) {
 		// return getKeycloakAccessToken(securityContext).getPreferredUsername();
-		return "CI#49545150";
+		return "CI#37194517";
 	}
 
 	// TODO ALVARO ACA NECESITO EL USUARIO LOGUEADO

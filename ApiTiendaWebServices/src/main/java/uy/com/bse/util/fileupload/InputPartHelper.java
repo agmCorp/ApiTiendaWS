@@ -1,4 +1,4 @@
-package uy.com.bse.util;
+package uy.com.bse.util.fileupload;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;

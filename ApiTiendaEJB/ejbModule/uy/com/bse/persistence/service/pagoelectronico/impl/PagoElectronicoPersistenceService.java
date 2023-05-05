@@ -117,11 +117,17 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 
 	@Override
 	public List<MedioDePagoDTO> getMediosDePago() throws PersistException {
+		final String KEY = "GET_MEDIOS_DE_PAGO";
+		
 		procesarErrorEnInicializacion();
 
 		MediosPagoResp resp = null;
 		try {
-			resp = proxy.consultaMediosPago(user, pwd);
+			resp = (MediosPagoResp) cacheTienda.getFromCache(KEY);
+			if (resp == null) {
+				resp = proxy.consultaMediosPago(user, pwd);
+				cacheTienda.addToCache(KEY, resp);
+			}
 		} catch (Exception e) {
 			procesarWSFault(e, "Fault en persistencia getMediosDePago");
 		}

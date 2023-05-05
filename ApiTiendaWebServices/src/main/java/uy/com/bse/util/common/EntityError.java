@@ -1,4 +1,4 @@
-package uy.com.bse.util;
+package uy.com.bse.util.common;
 
 import java.io.Serializable;
 

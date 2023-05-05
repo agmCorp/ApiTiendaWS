@@ -78,11 +78,17 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 
 	@Override
 	public List<CodigueraDTO> getPlanesCobertura() throws PersistException {
+		final String KEY = "GET_PLANES_COBERTURA";
+		
 		procesarErrorEnInicializacion();
 		
 		PlanesCoberturaTiendaResp resp = null;
 		try {
-			resp = proxy.consultaPlanesCobertura(user, pwd);
+			resp = (PlanesCoberturaTiendaResp) cacheTienda.getFromCache(KEY);
+			if (resp == null) {
+				resp = proxy.consultaPlanesCobertura(user, pwd);
+				cacheTienda.addToCache(KEY, resp);
+			}
 		} catch (Exception e) {
 			procesarWSFault(e, "Fault en persistencia getPlanesCobertura");
 		}
@@ -93,11 +99,17 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 
 	@Override
 	public List<CodigueraDTO> getTiposMovilidad() throws PersistException {
+		final String KEY = "GET_TIPOS_MOVILIDAD";
+		
 		procesarErrorEnInicializacion();
 		
 		TiposMovilidadTiendaResp resp = null;
 		try {
-			resp = proxy.consultaTiposMovilidad(user, pwd);
+			resp = (TiposMovilidadTiendaResp) cacheTienda.getFromCache(KEY);
+			if (resp == null) {
+				resp = proxy.consultaTiposMovilidad(user, pwd);
+				cacheTienda.addToCache(KEY, resp);
+			}
 		} catch (Exception e) {
 			procesarWSFault(e, "Fault en persistencia getTiposMovilidad");
 		}
@@ -108,11 +120,17 @@ public class ObjPersonalPersistenceService extends PersistenceService implements
 
 	@Override
 	public List<CodigueraDTO> getTiposObjeto() throws PersistException {
+		final String KEY = "GET_TIPOS_OBJETO";
+		
 		procesarErrorEnInicializacion();
 		
 		TiposObjetosTiendaResp resp = null;
 		try {
-			resp = proxy.consultaTiposObjetos(user, pwd);
+			resp = (TiposObjetosTiendaResp) cacheTienda.getFromCache(KEY);
+			if (resp == null) {
+				resp = proxy.consultaTiposObjetos(user, pwd);
+				cacheTienda.addToCache(KEY, resp);
+			}
 		} catch (Exception e) {
 			procesarWSFault(e, "Fault en persistencia getTiposObjeto");
 		}

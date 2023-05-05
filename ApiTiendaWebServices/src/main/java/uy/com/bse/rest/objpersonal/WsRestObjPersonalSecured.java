@@ -1,5 +1,6 @@
 package uy.com.bse.rest.objpersonal;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -11,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -77,9 +79,9 @@ public interface WsRestObjPersonalSecured {
 	@Path("/upload/{nroCotizacion}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	Response uploadFile(@Context SecurityContext securityContext,
-			
+
 			@Pattern(regexp = "\\d+", message = "El parámetro 'nroCotizacion' no es un número") @PathParam("nroCotizacion") String nroCotizacion,
-			
+
 			MultipartFormDataInput input);
 
 	@GET
@@ -90,4 +92,22 @@ public interface WsRestObjPersonalSecured {
 	@Path("/firma-electronica")
 	Response obtenerFirmaElectronica(@Context SecurityContext securityContext,
 			@NotEmpty(message = "No se encontró el parámetro 'textoPlano'") @QueryParam("textoPlano") String textoPlano);
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/redireccion")
+	Response redireccion(@Context SecurityContext securityContext, @Context HttpHeaders header,
+
+			@Context HttpServletResponse response,
+
+			@NotEmpty(message = "No se encontró el parámetro 'referrer'") @QueryParam("referrer") String referrer);
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/recaptchaSiteVerify")
+	Response recaptchaSiteVerify(@Context SecurityContext securityContext,
+			
+			@NotEmpty(message = "No se encontró el parámetro 'response'") @QueryParam("response") String response,
+			
+			@QueryParam("remoteIP") String remoteIP);
 }

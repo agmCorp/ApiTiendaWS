@@ -1,9 +1,12 @@
 package uy.com.bse.rest.objpersonal.impl;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -28,11 +31,13 @@ import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
 import uy.com.bse.rest.support.LoggingWsInterceptorBinding;
 import uy.com.bse.util.DateHelper;
-import uy.com.bse.util.InputPartHelper;
+import uy.com.bse.util.fileupload.InputPartHelper;
+import uy.com.bse.util.recaptcha.RecaptchaClient;
+import uy.com.bse.util.recaptcha.RecaptchaResponse;
 
 @LoggingWsInterceptorBinding
 public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implements WsRestObjPersonalSecured {
-	
+
 	private String getNewFilename(String userLoggedIn, String nroCotizacion, String filenamePrefix)
 			throws BusinessException {
 		// Define un nombre de archivo en función de datos del usuario logueado
@@ -293,5 +298,37 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		}
 
 		return getResponseOK(resp);
+	}
+
+	@Override
+	public Response redireccion(SecurityContext securityContext, HttpHeaders header, HttpServletResponse response,
+			String referrer) {
+		final String INTERNAL_MESSAGE = "Error en servicio redireccion";
+
+		URI uri = null;
+		try {
+			uri = new URI(referrer);
+		} catch (Exception e) {
+			throw procesarException(e, INTERNAL_MESSAGE);
+		}
+
+		return Response.temporaryRedirect(uri).build();
+	}
+
+	@Override
+	public Response recaptchaSiteVerify(SecurityContext securityContext, String response, String remoteIP) {
+		final String INTERNAL_MESSAGE = "Error en servicio recaptchaSiteVerify";
+		
+		RecaptchaClient client = new RecaptchaClient(getRecaptchaConfig());
+		RecaptchaResponse recaptchaResponse = client.verify(response, remoteIP);
+			
+		Response resp = null;
+		if (recaptchaResponse.isSuccess()) {
+			resp = getResponseOK(new Object());
+		} else {
+			throw getGenericWsException(INTERNAL_MESSAGE);
+		}
+		
+		return resp;
 	}
 }

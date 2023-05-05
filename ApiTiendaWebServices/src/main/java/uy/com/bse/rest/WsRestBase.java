@@ -18,17 +18,51 @@ import org.keycloak.representations.AccessToken;
 import uy.com.bse.dto.common.ErrorDTO;
 import uy.com.bse.exception.BusinessException;
 import uy.com.bse.exception.WsException;
-import uy.com.bse.util.EntityError;
+import uy.com.bse.util.common.EntityError;
+import uy.com.bse.util.recaptcha.RecaptchaConfig;
 
 public class WsRestBase {
 	private static final String CONFIG_ERROR = "configError";
 	private static final String ERROR_INESPERADO_CODIGO = "errorInesperado.codigo";
 	private static final String ERROR_INESPERADO_MENSAJE = "errorInesperado.mensaje";
-
 	private ResourceBundle configError = ResourceBundle.getBundle(CONFIG_ERROR);
+
+	private static final String CONFIG_RECAPTCHA = "configRecaptcha";
+	private static final String SERVICE_URL = "serviceUrl";
+	private static final String SECRET_KEY = "secretKey";
+	private static final String PROXY_ENABLED = "proxyEnabled";
+	private static final String PROXY_HOST = "proxyHost";
+	private static final String PROXY_PORT = "proxyPort";
+	private ResourceBundle configRecaptcha = ResourceBundle.getBundle(CONFIG_RECAPTCHA);
 
 	@Inject
 	protected Logger logger;
+
+	private EntityError getGenericError() {
+		return new EntityError(configError.getString(ERROR_INESPERADO_CODIGO),
+				configError.getString(ERROR_INESPERADO_MENSAJE));
+	}
+
+	protected RecaptchaConfig getRecaptchaConfig() {
+		RecaptchaConfig recaptchaConfig = new RecaptchaConfig();
+		recaptchaConfig.setServiceUrl(configRecaptcha.getString(SERVICE_URL));
+		recaptchaConfig.setSecretKey(configRecaptcha.getString(SECRET_KEY));
+
+		if (configRecaptcha.getString(PROXY_ENABLED).toLowerCase().equals("true")) {
+			recaptchaConfig.setProxyEnabled(true);
+			recaptchaConfig.setProxyHost(configRecaptcha.getString(PROXY_HOST));
+			recaptchaConfig.setProxyPort(configRecaptcha.getString(PROXY_PORT));
+		}
+
+		return recaptchaConfig;
+	}
+
+	protected AccessToken getKeycloakAccessToken(SecurityContext securityContext) {
+		Principal userPricipal = securityContext.getUserPrincipal();
+		@SuppressWarnings("unchecked")
+		KeycloakPrincipal<KeycloakSecurityContext> kp = (KeycloakPrincipal<KeycloakSecurityContext>) userPricipal;
+		return kp.getKeycloakSecurityContext().getToken();
+	}
 
 	protected Response getResponseOK(Object resp) {
 		ResponseBuilder builder = Response.ok();
@@ -37,11 +71,6 @@ public class WsRestBase {
 		builder.entity(resp);
 
 		return builder.build();
-	}
-
-	protected EntityError getGenericError() {
-		return new EntityError(configError.getString(ERROR_INESPERADO_CODIGO),
-				configError.getString(ERROR_INESPERADO_MENSAJE));
 	}
 
 	protected WsException getGenericWsException(String internalMessage) {
@@ -77,12 +106,5 @@ public class WsRestBase {
 		WsException wsException = new WsException(e, builder.build());
 		wsException.setInternalMessage(internalMessage);
 		return wsException;
-	}
-
-	protected AccessToken getKeycloakAccessToken(SecurityContext securityContext) {
-		Principal userPricipal = securityContext.getUserPrincipal();
-		@SuppressWarnings("unchecked")
-		KeycloakPrincipal<KeycloakSecurityContext> kp = (KeycloakPrincipal<KeycloakSecurityContext>) userPricipal;
-		return kp.getKeycloakSecurityContext().getToken();
 	}
 }

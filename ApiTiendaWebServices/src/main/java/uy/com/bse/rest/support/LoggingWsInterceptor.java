@@ -8,7 +8,7 @@ import javax.interceptor.InvocationContext;
 import org.apache.logging.log4j.Logger;
 
 import uy.com.bse.exception.WsException;
-import uy.com.bse.util.EntityError;
+import uy.com.bse.util.common.EntityError;
 
 @LoggingWsInterceptorBinding
 @Interceptor
@@ -19,6 +19,7 @@ public class LoggingWsInterceptor {
 
 	@AroundInvoke
 	public Object profile(InvocationContext ic) throws Exception {
+		Long initTime = System.currentTimeMillis();
 		String metodo = ic.getTarget().getClass().getCanonicalName() + "." + ic.getMethod().getName();
 
 		Object obj = null;
@@ -37,6 +38,9 @@ public class LoggingWsInterceptor {
 				logger.error(TAG + message);
 			}
 			throw wse;
+		} finally {
+			long diffTime = System.currentTimeMillis() - initTime;
+			logger.debug(TAG + "LATENCIA TOTAL SERVICIO REST " + metodo + ": " + diffTime + " milisegundo(s)");
 		}
 		return obj;
 	}
