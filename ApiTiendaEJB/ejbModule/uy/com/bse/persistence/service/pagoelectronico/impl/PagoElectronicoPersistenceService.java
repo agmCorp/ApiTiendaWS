@@ -41,7 +41,7 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 
 	@WebServiceRef(PagosElectronicos_Service.class)
 	private PagosElectronicos proxy;
-	
+
 	private String user;
 	private String pwd;
 	private Boolean initOK = false;
@@ -79,28 +79,46 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 		}
 		procesarErrorEnRespuesta(resp.getCodigoError(), resp.getDescripcionError(),
 				"Respuesta con error en persistencia getInstFinancieras rubro " + rubro);
-		
+
 		return InstFinancierasMap.map(resp);
 	}
 
 	@Override
 	public List<InstFinancieraDTO> getBancos() throws PersistException {
-		procesarErrorEnInicializacion();
+		final String KEY = "GET_BANCOS";
 		
-		return getInstFinancieras(RUBRO_FACTURA);
+		procesarErrorEnInicializacion();
+
+		@SuppressWarnings("unchecked")
+		List<InstFinancieraDTO> resp = (List<InstFinancieraDTO>) cacheTienda.getFromCache(KEY);
+		if (resp == null) {
+			resp = getInstFinancieras(RUBRO_FACTURA);
+			cacheTienda.addToCache(KEY, resp);
+		}
+
+		return resp;
 	}
 
 	@Override
 	public List<InstFinancieraDTO> getBancosYTarjetas() throws PersistException {
+		final String KEY = "GET_BANCOS_Y_TARJETAS";
+		
 		procesarErrorEnInicializacion();
 		
-		return getInstFinancieras(RUBRO_POLIZA);
+		@SuppressWarnings("unchecked")
+		List<InstFinancieraDTO> resp = (List<InstFinancieraDTO>) cacheTienda.getFromCache(KEY);
+		if (resp == null) {
+			resp = getInstFinancieras(RUBRO_POLIZA);
+			cacheTienda.addToCache(KEY, resp);
+		}
+
+		return resp;
 	}
 
 	@Override
 	public List<MedioDePagoDTO> getMediosDePago() throws PersistException {
 		procesarErrorEnInicializacion();
-		
+
 		MediosPagoResp resp = null;
 		try {
 			resp = proxy.consultaMediosPago(user, pwd);
@@ -109,14 +127,14 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 		}
 		procesarErrorEnRespuesta(resp.getCodigoError(), resp.getDescripcionError(),
 				"Respuesta con error en persistencia getMediosDePago");
-		
+
 		return MediosDePagoMap.map(resp);
 	}
 
 	@Override
 	public EstadoTransaccionDTO getEstadoTransaccion(String idTransaccion) throws PersistException {
-		procesarErrorEnInicializacion();		
-		
+		procesarErrorEnInicializacion();
+
 		EstadoTransaccionResp resp = null;
 		try {
 			resp = proxy.consultaEstadoTransaccion(user, pwd, idTransaccion);
@@ -125,14 +143,14 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 		}
 		procesarErrorEnRespuesta(resp.getCodigoError(), resp.getDescripcionError(),
 				"Respuesta con error en persistencia getEstadoTransaccion");
-		
+
 		return EstadoTransaccionMap.map(resp);
 	}
 
 	@Override
 	public FacturaDTO getFactura(Long nroFactura) throws PersistException {
 		procesarErrorEnInicializacion();
-		
+
 		FacturaResp resp = null;
 		try {
 			resp = proxy.consultaFactura(user, pwd, nroFactura);
@@ -141,7 +159,7 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 		}
 		procesarErrorEnRespuesta(resp.getCodigoError(), resp.getDescripcionError(),
 				"Respuesta con error en persistencia getFactura");
-		
+
 		return FacturaMap.map(resp);
 	}
 }

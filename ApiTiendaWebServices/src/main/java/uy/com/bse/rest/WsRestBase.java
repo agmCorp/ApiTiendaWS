@@ -3,12 +3,14 @@ package uy.com.bse.rest;
 import java.security.Principal;
 import java.util.ResourceBundle;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
+import org.apache.logging.log4j.Logger;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
@@ -24,6 +26,9 @@ public class WsRestBase {
 	private static final String ERROR_INESPERADO_MENSAJE = "errorInesperado.mensaje";
 
 	private ResourceBundle configError = ResourceBundle.getBundle(CONFIG_ERROR);
+
+	@Inject
+	protected Logger logger;
 
 	protected Response getResponseOK(Object resp) {
 		ResponseBuilder builder = Response.ok();

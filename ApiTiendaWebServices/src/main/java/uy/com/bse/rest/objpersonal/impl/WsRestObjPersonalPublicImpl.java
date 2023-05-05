@@ -21,7 +21,7 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 		List<CodigueraDTO> resp = null;
 
 		try {
-			resp = getFachada().getPlanesCobertura();
+			resp = fachada.getPlanesCobertura();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -37,7 +37,7 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 		List<CodigueraDTO> resp = null;
 
 		try {
-			resp = getFachada().getTiposMovilidad();
+			resp = fachada.getTiposMovilidad();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -53,7 +53,7 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 		List<CodigueraDTO> resp = null;
 
 		try {
-			resp = getFachada().getTiposObjeto();
+			resp = fachada.getTiposObjeto();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -69,7 +69,7 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 		CotizacionObjPersonalDTO resp = null;
 
 		try {
-			resp = getFachada().cotizarAnonimo(paramCotizacionDTO.getPlanCobertura(),
+			resp = fachada.cotizarAnonimo(paramCotizacionDTO.getPlanCobertura(),
 					paramCotizacionDTO.getTipoObjeto(), Double.valueOf(paramCotizacionDTO.getValorObjeto()),
 					paramCotizacionDTO.getMovilidad());
 		} catch (BusinessException be) {

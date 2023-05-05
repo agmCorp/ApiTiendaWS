@@ -59,7 +59,7 @@ public class LoggingPersistenceInterceptor {
 			throw pe;
 		} finally {
 			long diffTime = System.currentTimeMillis() - initTime;
-			logger.debug(TAG + "PROXY " + metodo + " latencia " + diffTime + " milisegundos");
+			logger.debug(TAG + "LATENCIA " + metodo + ": " + diffTime + " milisegundo(s)");
 		}
 		return obj;
 	}

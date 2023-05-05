@@ -3,6 +3,7 @@ package uy.com.bse.persistence.service;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.xml.ws.BindingProvider;
 
@@ -10,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import uy.com.bse.dto.common.ErrorDTO;
 import uy.com.bse.persistence.exception.PersistException;
+import uy.com.bse.persistence.support.CacheUtil;
 
 public abstract class PersistenceService {
 	private static final String CONFIG_ERROR = "configError";
@@ -22,6 +24,8 @@ public abstract class PersistenceService {
 
 	@Inject
 	protected Logger logger;
+	@EJB
+	protected CacheUtil cacheTienda;
 
 	protected void procesarWSFault(Exception e, String internalMessage) throws PersistException {
 		ErrorDTO errorDTO = new ErrorDTO(configError.getString(ERROR_INESPERADO_CODIGO),

@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import org.apache.logging.log4j.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -34,13 +32,11 @@ import uy.com.bse.util.InputPartHelper;
 
 @LoggingWsInterceptorBinding
 public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implements WsRestObjPersonalSecured {
-	@Inject
-	Logger logger;
-
+	
 	private String getNewFilename(String userLoggedIn, String nroCotizacion, String filenamePrefix)
 			throws BusinessException {
 		// Define un nombre de archivo en función de datos del usuario logueado
-		NumeroClienteDTO numeroClienteDTO = getFachada().getNumeroCliente(userLoggedIn);
+		NumeroClienteDTO numeroClienteDTO = fachada.getNumeroCliente(userLoggedIn);
 		String newFilename = filenamePrefix + "-" + nroCotizacion + "-" + getUserLoggedInTipoDoc(userLoggedIn) + "-"
 				+ getUserLoggedInDoc(userLoggedIn) + "-" + numeroClienteDTO.getNumCliente() + "-"
 				+ UUID.randomUUID().toString() + ".jpg";
@@ -60,7 +56,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		final String INTERNAL_MESSAGE = "Error en servicio obtenerBancos";
 		List<InstFinancieraDTO> resp = null;
 		try {
-			resp = getFachada().getBancos();
+			resp = fachada.getBancos();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -76,7 +72,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		List<InstFinancieraDTO> resp = null;
 
 		try {
-			resp = getFachada().getBancosYTarjetas();
+			resp = fachada.getBancosYTarjetas();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -92,7 +88,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		List<MedioDePagoDTO> resp = null;
 
 		try {
-			resp = getFachada().getMediosDePago();
+			resp = fachada.getMediosDePago();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -108,7 +104,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		EmisionObjPersonalDTO resp = null;
 
 		try {
-			resp = getFachada().emitir(paramEmisionDTO.getTipoDocumento(), paramEmisionDTO.getDocumento(),
+			resp = fachada.emitir(paramEmisionDTO.getTipoDocumento(), paramEmisionDTO.getDocumento(),
 					paramEmisionDTO.getMarca(), paramEmisionDTO.getSerie(), paramEmisionDTO.getModelo(),
 					Long.valueOf(paramEmisionDTO.getNroCotizacion()), Integer.valueOf(paramEmisionDTO.getPlanPago()),
 					DateHelper.stringToDate(paramEmisionDTO.getFechaFactura(), DateHelper.HYPHEN_YEAR_FIRST),
@@ -129,7 +125,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		ClienteDeudaDTO resp = null;
 
 		try {
-			resp = getFachada().controlarClienteConDeuda(tipoDocumento, documento, Long.valueOf(nroCotizacion),
+			resp = fachada.controlarClienteConDeuda(tipoDocumento, documento, Long.valueOf(nroCotizacion),
 					Integer.valueOf(nroCertificado));
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
@@ -146,7 +142,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		EstadoTransaccionDTO resp = null;
 
 		try {
-			resp = getFachada().getEstadoTransaccion(idTransaccion);
+			resp = fachada.getEstadoTransaccion(idTransaccion);
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -162,7 +158,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		FacturaDTO resp = null;
 
 		try {
-			resp = getFachada().getFactura(Long.valueOf(nroFactura));
+			resp = fachada.getFactura(Long.valueOf(nroFactura));
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -178,7 +174,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		NuevaFacturacionInteractivaDTO resp = null;
 
 		try {
-			resp = getFachada().nuevaFacturacionInteractiva(getUserLoggedIn(securityContext),
+			resp = fachada.nuevaFacturacionInteractiva(getUserLoggedIn(securityContext),
 					Integer.valueOf(paramFacturacionDTO.getCodRamo()),
 					Integer.valueOf(paramFacturacionDTO.getNroPoliza()), paramFacturacionDTO.getContemplaDias(),
 					DateHelper.stringToDate(paramFacturacionDTO.getFecha(), DateHelper.HYPHEN_YEAR_FIRST));
@@ -197,7 +193,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		final String INTERNAL_MESSAGE = "Error en servicio adhesionFacturaDigital";
 
 		try {
-			getFachada().adherirFacturaDigital(getUserLoggedIn(securityContext),
+			fachada.adherirFacturaDigital(getUserLoggedIn(securityContext),
 					Integer.valueOf(paramAdhesionFacturaDigitalDTO.getCodRamo()),
 					Integer.valueOf(paramAdhesionFacturaDigitalDTO.getNroPoliza()),
 					Integer.valueOf(paramAdhesionFacturaDigitalDTO.getSucursal()));
@@ -224,17 +220,17 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		}
 
 		InputPart inputPart = inputPartList.get(0); // Solo se procesa una imagen
-		
+
 		String filename = InputPartHelper.getFileName(inputPart);
 		if (filename == null || filename.isEmpty()) {
 			throw getGenericWsException("No se encontró archivo");
 		}
-		
+
 		String mimetype = InputPartHelper.getMimeType(inputPart);
 		if (mimetype == null || mimetype.isEmpty()) {
 			throw getGenericWsException("No se encontró mimetype");
 		}
-		
+
 		logger.debug("Se recibe el archivo " + filename + ", MIME-TYPE " + mimetype);
 
 		if (!ALLOWED_MIMETYPES.toLowerCase().contains(mimetype.toLowerCase())) {
@@ -254,7 +250,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 			// Envía el archivo a persistencia
 			String userLoggedIn = getUserLoggedIn(securityContext);
 			String newFilename = getNewFilename(userLoggedIn, nroCotizacion, FILENAME_PREFIX);
-			getFachada().subirArchivo(userLoggedIn, newFilename, resizedImage, JPEG_MIME_TYPE);
+			fachada.subirArchivo(userLoggedIn, newFilename, resizedImage, JPEG_MIME_TYPE);
 
 			// Resultado exitoso
 			fileUploadDTO = getFileUploadDTO(filename, mimetype, imageBytes);
@@ -273,7 +269,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		NumeroClienteDTO resp = null;
 
 		try {
-			resp = getFachada().getNumeroCliente(getUserLoggedIn(securityContext));
+			resp = fachada.getNumeroCliente(getUserLoggedIn(securityContext));
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -289,7 +285,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		FirmaElectronicaDTO resp = null;
 
 		try {
-			resp = getFachada().getFirmaElectronica(textoPlano);
+			resp = fachada.getFirmaElectronica(textoPlano);
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
