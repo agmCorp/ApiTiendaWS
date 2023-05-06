@@ -22,6 +22,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import uy.com.bse.rest.objpersonal.param.ParamAdhesionFacturaDigitalDTO;
 import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
+import uy.com.bse.rest.objpersonal.param.ParamRecaptchaRequestDTO;
 
 @Path("/objPersonal/securedX")
 @Produces(MediaType.APPLICATION_JSON)
@@ -102,12 +103,8 @@ public interface WsRestObjPersonalSecured {
 
 			@NotEmpty(message = "No se encontró el parámetro 'referrer'") @QueryParam("referrer") String referrer);
 
-	@GET
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/recaptchaSiteVerify")
-	Response recaptchaSiteVerify(@Context SecurityContext securityContext,
-			
-			@NotEmpty(message = "No se encontró el parámetro 'response'") @QueryParam("response") String response,
-			
-			@QueryParam("remoteIP") String remoteIP);
+	Response recaptchaSiteVerify(@Context SecurityContext securityContext, @Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO);
 }

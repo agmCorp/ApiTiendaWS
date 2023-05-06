@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -29,11 +30,11 @@ import uy.com.bse.rest.objpersonal.WsRestObjPersonalSecured;
 import uy.com.bse.rest.objpersonal.param.ParamAdhesionFacturaDigitalDTO;
 import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
+import uy.com.bse.rest.objpersonal.param.ParamRecaptchaRequestDTO;
 import uy.com.bse.rest.support.LoggingWsInterceptorBinding;
 import uy.com.bse.util.DateHelper;
 import uy.com.bse.util.fileupload.InputPartHelper;
 import uy.com.bse.util.recaptcha.RecaptchaClient;
-import uy.com.bse.util.recaptcha.RecaptchaResponse;
 
 @LoggingWsInterceptorBinding
 public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implements WsRestObjPersonalSecured {
@@ -316,19 +317,9 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 	}
 
 	@Override
-	public Response recaptchaSiteVerify(SecurityContext securityContext, String response, String remoteIP) {
-		final String INTERNAL_MESSAGE = "Error en servicio recaptchaSiteVerify";
-		
+	public Response recaptchaSiteVerify(SecurityContext securityContext,
+			@Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO) {
 		RecaptchaClient client = new RecaptchaClient(getRecaptchaConfig());
-		RecaptchaResponse recaptchaResponse = client.verify(response, remoteIP);
-			
-		Response resp = null;
-		if (recaptchaResponse.isSuccess()) {
-			resp = getResponseOK(new Object());
-		} else {
-			throw getGenericWsException(INTERNAL_MESSAGE);
-		}
-		
-		return resp;
+		return client.verify(paramRecaptchaRequestDTO.getResponse(), paramRecaptchaRequestDTO.getRemoteIp());
 	}
 }

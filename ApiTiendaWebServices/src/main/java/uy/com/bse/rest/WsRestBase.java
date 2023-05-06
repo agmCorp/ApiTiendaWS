@@ -47,9 +47,8 @@ public class WsRestBase {
 		RecaptchaConfig recaptchaConfig = new RecaptchaConfig();
 		recaptchaConfig.setServiceUrl(configRecaptcha.getString(SERVICE_URL));
 		recaptchaConfig.setSecretKey(configRecaptcha.getString(SECRET_KEY));
-
-		if (configRecaptcha.getString(PROXY_ENABLED).toLowerCase().equals("true")) {
-			recaptchaConfig.setProxyEnabled(true);
+		recaptchaConfig.setProxyEnabled(configRecaptcha.getString(PROXY_ENABLED).toLowerCase().equals("true"));
+		if (recaptchaConfig.getProxyEnabled()) {
 			recaptchaConfig.setProxyHost(configRecaptcha.getString(PROXY_HOST));
 			recaptchaConfig.setProxyPort(configRecaptcha.getString(PROXY_PORT));
 		}
