@@ -22,7 +22,6 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import uy.com.bse.rest.objpersonal.param.ParamAdhesionFacturaDigitalDTO;
 import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
-import uy.com.bse.rest.objpersonal.param.ParamRecaptchaRequestDTO;
 
 @Path("/objPersonal/securedX")
 @Produces(MediaType.APPLICATION_JSON)
