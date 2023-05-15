@@ -315,11 +315,4 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 
 		return Response.temporaryRedirect(uri).build();
 	}
-
-	@Override
-	public Response recaptchaSiteVerify(SecurityContext securityContext,
-			@Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO) {
-		RecaptchaClient client = new RecaptchaClient(getRecaptchaConfig());
-		return client.verify(paramRecaptchaRequestDTO.getResponse(), paramRecaptchaRequestDTO.getRemoteIp());
-	}
 }

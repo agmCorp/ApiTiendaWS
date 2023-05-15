@@ -102,9 +102,4 @@ public interface WsRestObjPersonalSecured {
 			@Context HttpServletResponse response,
 
 			@NotEmpty(message = "No se encontró el parámetro 'referrer'") @QueryParam("referrer") String referrer);
-
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/recaptcha-site-verify")
-	Response recaptchaSiteVerify(@Context SecurityContext securityContext, @Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO);
 }
