@@ -105,6 +105,6 @@ public interface WsRestObjPersonalSecured {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/recaptchaSiteVerify")
+	@Path("/recaptcha-site-verify")
 	Response recaptchaSiteVerify(@Context SecurityContext securityContext, @Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO);
 }
