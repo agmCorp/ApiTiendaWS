@@ -2,9 +2,7 @@ package uy.com.bse.rest.objpersonal.impl;
 
 import java.util.List;
 
-import javax.validation.Valid;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.objpersonal.CotizacionObjPersonalDTO;
@@ -87,8 +85,7 @@ public class WsRestObjPersonalPublicImpl extends WsRestObjPersonalBase implement
 	
 
 	@Override
-	public Response recaptchaSiteVerify(SecurityContext securityContext,
-			@Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO) {
+	public Response recaptchaSiteVerify(ParamRecaptchaRequestDTO paramRecaptchaRequestDTO) {
 		RecaptchaClient client = new RecaptchaClient(getRecaptchaConfig());
 		return client.verify(paramRecaptchaRequestDTO.getResponse(), paramRecaptchaRequestDTO.getRemoteIp());
 	}

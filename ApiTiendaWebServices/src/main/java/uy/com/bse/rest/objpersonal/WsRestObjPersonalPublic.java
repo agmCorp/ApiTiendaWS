@@ -38,5 +38,5 @@ public interface WsRestObjPersonalPublic {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/recaptcha-site-verify")
-	Response recaptchaSiteVerify(@Context SecurityContext securityContext, @Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO);
+	Response recaptchaSiteVerify(@Valid ParamRecaptchaRequestDTO paramRecaptchaRequestDTO);
 }
