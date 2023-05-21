@@ -4,5 +4,7 @@
   "auth-server-url" : "http://localhost:8180/auth",
   "resource": "tienda-bse",
   "ssl-required": "external",
-  "use-resource-role-mappings" : true
+  "use-resource-role-mappings" : true,
+  "enable-cors": true
 }
+
