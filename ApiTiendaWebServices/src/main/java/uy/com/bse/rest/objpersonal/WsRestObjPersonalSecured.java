@@ -23,7 +23,7 @@ import uy.com.bse.rest.objpersonal.param.ParamAdhesionFacturaDigitalDTO;
 import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
 
-@Path("/objPersonal/securedX")
+@Path("/objPersonal/secured")
 @Produces(MediaType.APPLICATION_JSON)
 public interface WsRestObjPersonalSecured {
 
