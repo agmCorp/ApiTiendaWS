@@ -2,7 +2,7 @@
   "realm" : "MiBSE",
   "bearer-only": true,
   "auth-server-url" : "https://sso-test.bse.com.uy/auth/",
-  "resource": "react-webapp",
+  "resource": "tienda-bse",
   "ssl-required": "external",
   "use-resource-role-mappings" : true
 }
