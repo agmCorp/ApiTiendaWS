@@ -11,7 +11,7 @@ public class WsRestObjPersonalBase extends WsRestBase {
 	protected FachadaObjPersonalLocal fachada;
 
 	protected String getUserLoggedIn(SecurityContext securityContext) {
-		return getKeycloakAccessToken(securityContext).getPreferredUsername();
+		return getKeycloakAccessToken(securityContext).getPreferredUsername().toUpperCase();
 	}
 
 	protected String getUserLoggedInTipoDoc(String userLoggedIn) {

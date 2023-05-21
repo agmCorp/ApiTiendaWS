@@ -1,7 +1,7 @@
 {
   "realm" : "MiBSE",
   "bearer-only": true,
-  "auth-server-url" : "https://sso-test.bse.com.uy/auth/",
+  "auth-server-url" : "http://localhost:8180/auth",
   "resource": "tienda-bse",
   "ssl-required": "external",
   "use-resource-role-mappings" : true
