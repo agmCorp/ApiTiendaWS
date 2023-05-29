@@ -12,9 +12,9 @@ import uy.com.bse.persistence.exception.PersistException;
 
 @Local
 public interface PagoElectronicoDAO {
-	List<InstFinancieraDTO> getBancos() throws PersistException;
+	List<InstFinancieraDTO> getMediosDePagoFactura() throws PersistException;
 
-	List<InstFinancieraDTO> getBancosYTarjetas() throws PersistException;
+	List<InstFinancieraDTO> getMediosDePagoPoliza() throws PersistException;
 
 	List<MedioDePagoDTO> getMediosDePago() throws PersistException;
 

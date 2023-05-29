@@ -1,6 +1,5 @@
 package uy.com.bse.rest.objpersonal;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -12,7 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -28,12 +26,12 @@ import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
 public interface WsRestObjPersonalSecured {
 
 	@GET
-	@Path("/bancos")
-	Response obtenerBancos(@Context SecurityContext securityContext);
+	@Path("/medios-de-pago-factura")
+	Response obtenerMediosDePagoFactura(@Context SecurityContext securityContext);
 
 	@GET
-	@Path("/bancos-tarjetas")
-	Response obtenerBancosYTarjetas(@Context SecurityContext securityContext);
+	@Path("/medios-de-pago-poliza")
+	Response obtenerMediosDePagoPoliza(@Context SecurityContext securityContext);
 
 	@GET
 	@Path("/medios-de-pago")
@@ -92,13 +90,4 @@ public interface WsRestObjPersonalSecured {
 	@Path("/firma-electronica")
 	Response obtenerFirmaElectronica(@Context SecurityContext securityContext,
 			@NotEmpty(message = "No se encontró el parámetro 'textoPlano'") @QueryParam("textoPlano") String textoPlano);
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/redireccion")
-	Response redireccion(@Context SecurityContext securityContext, @Context HttpHeaders header,
-
-			@Context HttpServletResponse response,
-
-			@NotEmpty(message = "No se encontró el parámetro 'referrer'") @QueryParam("referrer") String referrer);
 }

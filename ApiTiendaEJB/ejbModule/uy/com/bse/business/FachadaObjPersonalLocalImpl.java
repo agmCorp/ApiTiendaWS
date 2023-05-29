@@ -145,26 +145,26 @@ public class FachadaObjPersonalLocalImpl extends Fachada implements FachadaObjPe
 	}
 
 	@Override
-	public List<InstFinancieraDTO> getBancos() throws BusinessException {
+	public List<InstFinancieraDTO> getMediosDePagoFactura() throws BusinessException {
 		List<InstFinancieraDTO> instFinancieraList = null;
 
 		try {
-			instFinancieraList = pagoElectronicoDAO.getBancos();
+			instFinancieraList = pagoElectronicoDAO.getMediosDePagoFactura();
 		} catch (PersistException e) {
-			procesarPersistException(e, "Error en negocio getBancos");
+			procesarPersistException(e, "Error en negocio getMediosDePagoFactura");
 		}
 
 		return instFinancieraList;
 	}
 
 	@Override
-	public List<InstFinancieraDTO> getBancosYTarjetas() throws BusinessException {
+	public List<InstFinancieraDTO> getMediosDePagoPoliza() throws BusinessException {
 		List<InstFinancieraDTO> instFinancieraList = null;
 
 		try {
-			instFinancieraList = pagoElectronicoDAO.getBancosYTarjetas();
+			instFinancieraList = pagoElectronicoDAO.getMediosDePagoPoliza();
 		} catch (PersistException e) {
-			procesarPersistException(e, "Error en negocio getBancosYTarjetas");
+			procesarPersistException(e, "Error en negocio getMediosDePagoPoliza");
 		}
 
 		return instFinancieraList;

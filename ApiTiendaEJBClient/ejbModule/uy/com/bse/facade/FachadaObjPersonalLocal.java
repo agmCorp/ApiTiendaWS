@@ -37,9 +37,9 @@ public interface FachadaObjPersonalLocal {
 
 	EstadoTransaccionDTO getEstadoTransaccion(String idTransaccion) throws BusinessException;
 
-	List<InstFinancieraDTO> getBancos() throws BusinessException;
+	List<InstFinancieraDTO> getMediosDePagoFactura() throws BusinessException;
 
-	List<InstFinancieraDTO> getBancosYTarjetas() throws BusinessException;
+	List<InstFinancieraDTO> getMediosDePagoPoliza() throws BusinessException;
 
 	List<MedioDePagoDTO> getMediosDePago() throws BusinessException;
 

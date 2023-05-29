@@ -1,12 +1,9 @@
 package uy.com.bse.rest.objpersonal.impl;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -55,11 +52,11 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 	}
 
 	@Override
-	public Response obtenerBancos(SecurityContext securityContext) {
-		final String INTERNAL_MESSAGE = "Error en servicio obtenerBancos";
+	public Response obtenerMediosDePagoFactura(SecurityContext securityContext) {
+		final String INTERNAL_MESSAGE = "Error en servicio obtenerMediosDePagoFactura";
 		List<InstFinancieraDTO> resp = null;
 		try {
-			resp = fachada.getBancos();
+			resp = fachada.getMediosDePagoFactura();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -70,12 +67,12 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 	}
 
 	@Override
-	public Response obtenerBancosYTarjetas(SecurityContext securityContext) {
-		final String INTERNAL_MESSAGE = "Error en servicio obtenerBancosYTarjetas";
+	public Response obtenerMediosDePagoPoliza(SecurityContext securityContext) {
+		final String INTERNAL_MESSAGE = "Error en servicio obtenerMediosDePagoPoliza";
 		List<InstFinancieraDTO> resp = null;
 
 		try {
-			resp = fachada.getBancosYTarjetas();
+			resp = fachada.getMediosDePagoPoliza();
 		} catch (BusinessException be) {
 			throw procesarBusinessException(be, INTERNAL_MESSAGE);
 		} catch (Exception e) {
@@ -296,20 +293,5 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		}
 
 		return getResponseOK(resp);
-	}
-
-	@Override
-	public Response redireccion(SecurityContext securityContext, HttpHeaders header, HttpServletResponse response,
-			String referrer) {
-		final String INTERNAL_MESSAGE = "Error en servicio redireccion";
-
-		URI uri = null;
-		try {
-			uri = new URI(referrer);
-		} catch (Exception e) {
-			throw procesarException(e, INTERNAL_MESSAGE);
-		}
-
-		return Response.temporaryRedirect(uri).build();
 	}
 }

@@ -84,8 +84,8 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 	}
 
 	@Override
-	public List<InstFinancieraDTO> getBancos() throws PersistException {
-		final String KEY = "GET_BANCOS";
+	public List<InstFinancieraDTO> getMediosDePagoFactura() throws PersistException {
+		final String KEY = "GET_MEDIOS_DE_PAGO_FACTURA";
 		
 		procesarErrorEnInicializacion();
 
@@ -100,8 +100,8 @@ public class PagoElectronicoPersistenceService extends PersistenceService implem
 	}
 
 	@Override
-	public List<InstFinancieraDTO> getBancosYTarjetas() throws PersistException {
-		final String KEY = "GET_BANCOS_Y_TARJETAS";
+	public List<InstFinancieraDTO> getMediosDePagoPoliza() throws PersistException {
+		final String KEY = "GET_MEDIOS_DE_PAGO_POLIZA";
 		
 		procesarErrorEnInicializacion();
 		
