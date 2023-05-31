@@ -15,10 +15,12 @@ import uy.com.bse.dto.mibse.NumeroClienteDTO;
 import uy.com.bse.persistence.exception.PersistException;
 import uy.com.bse.persistence.proxy.mibse.IWsServiciosMiBse;
 import uy.com.bse.persistence.proxy.mibse.ParamAdherirFacturaDigital;
+import uy.com.bse.persistence.proxy.mibse.ParamInformarPagoRedes;
 import uy.com.bse.persistence.proxy.mibse.ParamObtenerNumeroCliente;
 import uy.com.bse.persistence.proxy.mibse.ParamSubirArchivo;
 import uy.com.bse.persistence.proxy.mibse.ResultAdherirFacturaDigital;
 import uy.com.bse.persistence.proxy.mibse.ResultGenerico;
+import uy.com.bse.persistence.proxy.mibse.ResultInformarPagoRedes;
 import uy.com.bse.persistence.proxy.mibse.ResultObtenerNumeroCliente;
 import uy.com.bse.persistence.proxy.mibse.ResultSubirArchivo;
 import uy.com.bse.persistence.proxy.mibse.ServiciosError;
@@ -124,5 +126,36 @@ public class MiBsePersistenceService extends PersistenceService implements MiBse
 		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia getNumeroCliente");
 		
 		return NumeroClienteMap.map(resp);
+	}
+
+	@Override
+	public void informarPagoEnRedes(String seguridadServiciosUser, String tokenSeguridad, String idTransaccion,
+			Long documentId, String codProd, String descProducto, Integer codRamo, String descRamo, Integer nroPoliza,
+			Integer nroCertificado, String tipoDocumento, String nroDocumento, String nombres, String apellidos)  throws PersistException {
+		procesarErrorEnInicializacion();
+		
+		ResultInformarPagoRedes resp = null;
+		try {
+			ParamInformarPagoRedes param = new ParamInformarPagoRedes();
+			param.setUsuario(seguridadServiciosUser);
+			param.setClave(tokenSeguridad);
+			param.setIdTransaccion(idTransaccion);
+			param.setDocumentId(String.valueOf(documentId));
+			param.setCodProducto(codProd);
+			param.setDescProducto(descProducto);
+			param.setCodRamo(codRamo);
+			param.setDescRamo(descRamo);
+			param.setNumPoliza(nroPoliza);
+			param.setCertificado(nroCertificado);
+			param.setTipoDocumento(tipoDocumento);
+			param.setNroDocumento(nroDocumento);
+			param.setNombres(nombres);
+			param.setApellidos(apellidos);
+
+			resp = proxy.informarPagoRedes(param);
+		} catch (Exception e) {
+			procesarWSFault(e, "Fault en persistencia informarPagoEnRedes");
+		}
+		procesarErrorEnRespuesta(resp, "Respuesta con error en persistencia informarPagoEnRedes");
 	}
 }

@@ -14,4 +14,8 @@ public interface MiBseDAO {
 			String mimeType) throws PersistException;
 
 	NumeroClienteDTO getNumeroCliente(String seguridadServiciosUser, String tokenSeguridad) throws PersistException;
+	
+	void informarPagoEnRedes(String seguridadServiciosUser, String tokenSeguridad, String idTransaccion, Long documentId, String codProd,
+			String descProducto, Integer codRamo, String descRamo, Integer nroPoliza, Integer nroCertificado,
+			String tipoDocumento, String nroDocumento, String nombres, String apellidos) throws PersistException;
 }

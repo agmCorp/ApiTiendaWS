@@ -7,6 +7,7 @@ import javax.ejb.Remote;
 
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.common.FacturaDTO;
+import uy.com.bse.dto.common.IdTrnDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
 import uy.com.bse.dto.objpersonal.ClienteDeudaDTO;
@@ -55,6 +56,15 @@ public interface FachadaObjPersonalRemote {
 			throws BusinessException;
 
 	NumeroClienteDTO getNumeroCliente(String userLoggedIn) throws BusinessException;
-	
+
 	FirmaElectronicaDTO getFirmaElectronica(String textoPlano) throws BusinessException;
+
+	IdTrnDTO getIdTrnSistarbanc(String medioDePago, String nroFactura) throws BusinessException;
+
+	IdTrnDTO getIdTrnBanred(String medioDePago, String nroFactura) throws BusinessException;
+
+	void informarPagoEnRedes(String userLoggedIn, String medioDePago, String nroFactura, Long documentId,
+			String codProd, String descProducto, Integer codRamo, String descRamo, Integer nroPoliza,
+			Integer nroCertificado, String tipoDocumento, String nroDocumento, String nombres, String apellidos)
+			throws BusinessException;
 }

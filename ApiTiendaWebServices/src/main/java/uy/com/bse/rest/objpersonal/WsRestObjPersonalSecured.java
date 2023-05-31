@@ -20,6 +20,8 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import uy.com.bse.rest.objpersonal.param.ParamAdhesionFacturaDigitalDTO;
 import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
+import uy.com.bse.rest.objpersonal.param.ParamIdTrnDTO;
+import uy.com.bse.rest.objpersonal.param.ParamInformarPagoEnRedesDTO;
 
 @Path("/objPersonal/secured")
 @Produces(MediaType.APPLICATION_JSON)
@@ -90,4 +92,20 @@ public interface WsRestObjPersonalSecured {
 	@Path("/firma-electronica")
 	Response obtenerFirmaElectronica(@Context SecurityContext securityContext,
 			@NotEmpty(message = "No se encontró el parámetro 'textoPlano'") @QueryParam("textoPlano") String textoPlano);
+
+	@GET
+	@Path("/id-trn-sistarbanc")
+	@Consumes(MediaType.APPLICATION_JSON)
+	Response obtenerIdTrnSistarbanc(@Context SecurityContext securityContext, @Valid ParamIdTrnDTO paramIdTrnDTO);
+
+	@GET
+	@Path("/id-trn-banred")
+	@Consumes(MediaType.APPLICATION_JSON)
+	Response obtenerIdTrnBanred(@Context SecurityContext securityContext, @Valid ParamIdTrnDTO paramIdTrnDTO);
+
+	@POST
+	@Path("/pago-en-redes")
+	@Consumes(MediaType.APPLICATION_JSON)
+	Response informarPagoEnRedes(@Context SecurityContext securityContext,
+			@Valid ParamInformarPagoEnRedesDTO paramInformarPagoEnRedesDTO);
 }

@@ -11,6 +11,7 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import uy.com.bse.dto.common.FacturaDTO;
+import uy.com.bse.dto.common.IdTrnDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.FileUploadDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
@@ -26,6 +27,8 @@ import uy.com.bse.rest.objpersonal.WsRestObjPersonalSecured;
 import uy.com.bse.rest.objpersonal.param.ParamAdhesionFacturaDigitalDTO;
 import uy.com.bse.rest.objpersonal.param.ParamEmisionDTO;
 import uy.com.bse.rest.objpersonal.param.ParamFacturacionDTO;
+import uy.com.bse.rest.objpersonal.param.ParamIdTrnDTO;
+import uy.com.bse.rest.objpersonal.param.ParamInformarPagoEnRedesDTO;
 import uy.com.bse.rest.support.LoggingWsInterceptorBinding;
 import uy.com.bse.util.DateHelper;
 import uy.com.bse.util.fileupload.InputPartHelper;
@@ -293,5 +296,62 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 		}
 
 		return getResponseOK(resp);
+	}
+
+	@Override
+	public Response obtenerIdTrnSistarbanc(SecurityContext securityContext, ParamIdTrnDTO paramIdTrnDTO) {
+		final String INTERNAL_MESSAGE = "Error en servicio obtenerIdTrnSistarbanc";
+		IdTrnDTO resp = null;
+
+		try {
+			resp = fachada.getIdTrnSistarbanc(paramIdTrnDTO.getMedioDePago(), paramIdTrnDTO.getNroFactura());
+		} catch (BusinessException be) {
+			throw procesarBusinessException(be, INTERNAL_MESSAGE);
+		} catch (Exception e) {
+			throw procesarException(e, INTERNAL_MESSAGE);
+		}
+
+		return getResponseOK(resp);
+	}
+
+	@Override
+	public Response obtenerIdTrnBanred(SecurityContext securityContext, ParamIdTrnDTO paramIdTrnDTO) {
+		final String INTERNAL_MESSAGE = "Error en servicio obtenerIdTrnBanred";
+		IdTrnDTO resp = null;
+
+		try {
+			resp = fachada.getIdTrnBanred(paramIdTrnDTO.getMedioDePago(), paramIdTrnDTO.getNroFactura());
+		} catch (BusinessException be) {
+			throw procesarBusinessException(be, INTERNAL_MESSAGE);
+		} catch (Exception e) {
+			throw procesarException(e, INTERNAL_MESSAGE);
+		}
+
+		return getResponseOK(resp);
+	}
+
+	@Override
+	public Response informarPagoEnRedes(SecurityContext securityContext,
+			ParamInformarPagoEnRedesDTO paramInformarPagoEnRedesDTO) {
+		final String INTERNAL_MESSAGE = "Error en servicio informarPagoEnRedes";
+
+		try {
+			fachada.informarPagoEnRedes(getUserLoggedIn(securityContext), paramInformarPagoEnRedesDTO.getMedioDePago(),
+					paramInformarPagoEnRedesDTO.getNroFactura(),
+					Long.valueOf(paramInformarPagoEnRedesDTO.getDocumentId()), paramInformarPagoEnRedesDTO.getCodProd(),
+					paramInformarPagoEnRedesDTO.getDescProducto(),
+					Integer.valueOf(paramInformarPagoEnRedesDTO.getCodRamo()),
+					paramInformarPagoEnRedesDTO.getDescRamo(),
+					Integer.valueOf(paramInformarPagoEnRedesDTO.getNroPoliza()),
+					Integer.valueOf(paramInformarPagoEnRedesDTO.getNroCertificado()),
+					paramInformarPagoEnRedesDTO.getTipoDocumento(), paramInformarPagoEnRedesDTO.getNroDocumento(),
+					paramInformarPagoEnRedesDTO.getNombres(), paramInformarPagoEnRedesDTO.getApellidos());
+		} catch (BusinessException be) {
+			throw procesarBusinessException(be, INTERNAL_MESSAGE);
+		} catch (Exception e) {
+			throw procesarException(e, INTERNAL_MESSAGE);
+		}
+
+		return getResponseOK(new Object());
 	}
 }

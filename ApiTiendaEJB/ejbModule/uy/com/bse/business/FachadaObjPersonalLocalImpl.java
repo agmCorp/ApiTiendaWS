@@ -1,5 +1,6 @@
 package uy.com.bse.business;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.ejb.TransactionAttributeType;
 import uy.com.bse.business.support.LoggingBusinessInterceptorBinding;
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.common.FacturaDTO;
+import uy.com.bse.dto.common.IdTrnDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
 import uy.com.bse.dto.objpersonal.ClienteDeudaDTO;
@@ -47,6 +49,13 @@ public class FachadaObjPersonalLocalImpl extends Fachada implements FachadaObjPe
 	private MiBseDAO miBseDAO;
 	@EJB
 	private FirmaElectronicaDAO firmaElectronicaDAO;
+
+	private String getCurrentTimeStamp() {
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		return strDate;
+	}
 
 	@Override
 	public List<CodigueraDTO> getPlanesCobertura() throws BusinessException {
@@ -264,5 +273,48 @@ public class FachadaObjPersonalLocalImpl extends Fachada implements FachadaObjPe
 		}
 
 		return firmaElectronicaDTO;
+	}
+
+	@Override
+	public IdTrnDTO getIdTrnSistarbanc(String medioDePago, String nroFactura) throws BusinessException {
+		String idTrn = getCurrentTimeStamp() + String.format("%4s", medioDePago.trim()).replace(' ', '0')
+				+ String.format("%9s", nroFactura.trim()).replace(' ', '0');
+		IdTrnDTO idTrnDTO = new IdTrnDTO();
+		idTrnDTO.setIdTrn(idTrn);
+		return idTrnDTO;
+	}
+
+	@Override
+	public IdTrnDTO getIdTrnBanred(String medioDePago, String nroFactura) throws BusinessException {
+		IdTrnDTO idTrnDTO = null;
+
+		try {
+			String idTransaccion = getCurrentTimeStamp() + String.format("%4s", medioDePago.trim()).replace(' ', '0')
+					+ String.format("%9s", nroFactura.trim()).replace(' ', '0');
+			FirmaElectronicaDTO firmaElectronicaDTO = firmaElectronicaDAO.getFirmaElectronica(idTransaccion);
+			idTrnDTO = new IdTrnDTO();
+			idTrnDTO.setIdTrn(firmaElectronicaDTO.getFirma());
+		} catch (PersistException e) {
+			procesarPersistException(e, "Error en negocio getIdTrnBanred");
+		}
+
+		return idTrnDTO;
+	}
+
+	@Override
+	public void informarPagoEnRedes(String userLoggedIn, String medioDePago, String nroFactura, Long documentId, String codProd, String descProducto,
+			Integer codRamo, String descRamo, Integer nroPoliza, Integer nroCertificado, String tipoDocumento,
+			String nroDocumento, String nombres, String apellidos) throws BusinessException {
+		try {
+			SeguridadServiciosDTO seguridadServiciosDTO = seguridadServiciosDAO.login(userLoggedIn);
+			String idTransaccion = getCurrentTimeStamp() + String.format("%4s", medioDePago.trim()).replace(' ', '0')
+					+ String.format("%9s", nroFactura.trim()).replace(' ', '0');
+			miBseDAO.informarPagoEnRedes(userLoggedIn, seguridadServiciosDTO.getToken(), idTransaccion, documentId,
+					codProd, descProducto, codRamo, descRamo, nroPoliza, nroCertificado, tipoDocumento, nroDocumento,
+					nombres, apellidos);
+			seguridadServiciosDAO.logout(userLoggedIn, seguridadServiciosDTO.getToken());
+		} catch (PersistException e) {
+			procesarPersistException(e, "Error en negocio adherirFacturaDigital");
+		}
 	}
 }
