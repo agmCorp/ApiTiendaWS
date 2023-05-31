@@ -16,12 +16,15 @@ public class EmisionObjPersonalMap {
 
 	public static PolizaObjPersonalDTO parse(PolizaOPersonalTienda wsPolizaOPersonal) {
 		PolizaObjPersonalDTO polizaObjPersonal = new PolizaObjPersonalDTO();
+		polizaObjPersonal.setCodProducto(wsPolizaOPersonal.getProducto().getProducto());
+		polizaObjPersonal.setProductoDsc(wsPolizaOPersonal.getProducto().getDescripcion());
+		polizaObjPersonal.setCodRamo(wsPolizaOPersonal.getRamo().getRamo());
+		polizaObjPersonal.setRamoDsc(wsPolizaOPersonal.getRamo().getDescripcion());
 		polizaObjPersonal.setFechaDesde(DateHelper.xmlGregorianCalendarToString(wsPolizaOPersonal.getFechaDesde(),
 				DateHelper.HYPHEN_YEAR_FIRST));
 		polizaObjPersonal.setFechaHasta(DateHelper.xmlGregorianCalendarToString(wsPolizaOPersonal.getFechaHasta(),
 				DateHelper.HYPHEN_YEAR_FIRST));
 		polizaObjPersonal.setNroPoliza(wsPolizaOPersonal.getNroPoliza());
-		polizaObjPersonal.setCodRamo(wsPolizaOPersonal.getRamo().getRamo());
 		return polizaObjPersonal;
 	}
 }

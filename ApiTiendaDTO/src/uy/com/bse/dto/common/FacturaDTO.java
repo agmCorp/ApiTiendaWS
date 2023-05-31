@@ -6,7 +6,7 @@ public class FacturaDTO implements Serializable {
 	private static final long serialVersionUID = 4014777486609203550L;
 
 	private Integer codRamo;
-	private String codProducto;
+	private String codProd;
 	private Integer nroPoliza;
 	private String descProducto;
 	private String descRamo;
@@ -44,12 +44,12 @@ public class FacturaDTO implements Serializable {
 		this.codRamo = codRamo;
 	}
 
-	public String getCodProducto() {
-		return codProducto;
+	public String getCodProd() {
+		return codProd;
 	}
 
-	public void setCodProducto(String codProducto) {
-		this.codProducto = codProducto;
+	public void setCodProd(String codProd) {
+		this.codProd = codProd;
 	}
 
 	public Integer getNroPoliza() {

@@ -11,7 +11,7 @@ public class FacturaMap {
 		Factura wsFactura = resp.getFactura();
 
 		facturaDTO.setCodRamo(wsFactura.getRamo());
-		facturaDTO.setCodProducto(wsFactura.getProducto());
+		facturaDTO.setCodProd(wsFactura.getProducto());
 		facturaDTO.setNroPoliza(wsFactura.getPoliza());
 		facturaDTO.setDescProducto(wsFactura.getDescripcionProducto());
 		facturaDTO.setDescRamo(wsFactura.getDescripcionRamo());
