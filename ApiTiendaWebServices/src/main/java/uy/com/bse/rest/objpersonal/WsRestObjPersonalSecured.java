@@ -93,12 +93,12 @@ public interface WsRestObjPersonalSecured {
 	Response obtenerFirmaElectronica(@Context SecurityContext securityContext,
 			@NotEmpty(message = "No se encontró el parámetro 'textoPlano'") @QueryParam("textoPlano") String textoPlano);
 
-	@GET
+	@POST
 	@Path("/id-trn-sistarbanc")
 	@Consumes(MediaType.APPLICATION_JSON)
 	Response obtenerIdTrnSistarbanc(@Context SecurityContext securityContext, @Valid ParamIdTrnDTO paramIdTrnDTO);
 
-	@GET
+	@POST
 	@Path("/id-trn-banred")
 	@Consumes(MediaType.APPLICATION_JSON)
 	Response obtenerIdTrnBanred(@Context SecurityContext securityContext, @Valid ParamIdTrnDTO paramIdTrnDTO);
