@@ -11,7 +11,8 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import uy.com.bse.dto.common.FacturaDTO;
-import uy.com.bse.dto.common.IdTrnDTO;
+import uy.com.bse.dto.common.IdTrnBanredDTO;
+import uy.com.bse.dto.common.IdTrnSistarbancDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.FileUploadDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
@@ -301,7 +302,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 	@Override
 	public Response obtenerIdTrnSistarbanc(SecurityContext securityContext, ParamIdTrnDTO paramIdTrnDTO) {
 		final String INTERNAL_MESSAGE = "Error en servicio obtenerIdTrnSistarbanc";
-		IdTrnDTO resp = null;
+		IdTrnSistarbancDTO resp = null;
 
 		try {
 			resp = fachada.getIdTrnSistarbanc(paramIdTrnDTO.getMedioDePago(), paramIdTrnDTO.getNroFactura());
@@ -317,7 +318,7 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 	@Override
 	public Response obtenerIdTrnBanred(SecurityContext securityContext, ParamIdTrnDTO paramIdTrnDTO) {
 		final String INTERNAL_MESSAGE = "Error en servicio obtenerIdTrnBanred";
-		IdTrnDTO resp = null;
+		IdTrnBanredDTO resp = null;
 
 		try {
 			resp = fachada.getIdTrnBanred(paramIdTrnDTO.getMedioDePago(), paramIdTrnDTO.getNroFactura());

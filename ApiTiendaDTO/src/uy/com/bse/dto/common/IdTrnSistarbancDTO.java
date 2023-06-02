@@ -2,7 +2,7 @@ package uy.com.bse.dto.common;
 
 import java.io.Serializable;
 
-public class IdTrnDTO implements Serializable {
+public class IdTrnSistarbancDTO implements Serializable {
 	private static final long serialVersionUID = -8390747831493022353L;
 	
 	private String idTrn;

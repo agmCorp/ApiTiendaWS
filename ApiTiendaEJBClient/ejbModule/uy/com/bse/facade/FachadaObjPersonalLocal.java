@@ -7,7 +7,8 @@ import javax.ejb.Local;
 
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.common.FacturaDTO;
-import uy.com.bse.dto.common.IdTrnDTO;
+import uy.com.bse.dto.common.IdTrnBanredDTO;
+import uy.com.bse.dto.common.IdTrnSistarbancDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
 import uy.com.bse.dto.objpersonal.ClienteDeudaDTO;
@@ -59,9 +60,9 @@ public interface FachadaObjPersonalLocal {
 
 	FirmaElectronicaDTO getFirmaElectronica(String textoPlano) throws BusinessException;
 
-	IdTrnDTO getIdTrnSistarbanc(String medioDePago, String nroFactura) throws BusinessException;
+	IdTrnSistarbancDTO getIdTrnSistarbanc(String medioDePago, String nroFactura) throws BusinessException;
 
-	IdTrnDTO getIdTrnBanred(String medioDePago, String nroFactura) throws BusinessException;
+	IdTrnBanredDTO getIdTrnBanred(String medioDePago, String nroFactura) throws BusinessException;
 
 	void informarPagoEnRedes(String userLoggedIn, String medioDePago, String nroFactura, Long documentId,
 			String codProd, String descProducto, Integer codRamo, String descRamo, Integer nroPoliza,

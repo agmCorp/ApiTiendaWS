@@ -12,7 +12,8 @@ import javax.ejb.TransactionAttributeType;
 import uy.com.bse.business.support.LoggingBusinessInterceptorBinding;
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.common.FacturaDTO;
-import uy.com.bse.dto.common.IdTrnDTO;
+import uy.com.bse.dto.common.IdTrnBanredDTO;
+import uy.com.bse.dto.common.IdTrnSistarbancDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
 import uy.com.bse.dto.objpersonal.ClienteDeudaDTO;
@@ -276,29 +277,30 @@ public class FachadaObjPersonalLocalImpl extends Fachada implements FachadaObjPe
 	}
 
 	@Override
-	public IdTrnDTO getIdTrnSistarbanc(String medioDePago, String nroFactura) throws BusinessException {
+	public IdTrnSistarbancDTO getIdTrnSistarbanc(String medioDePago, String nroFactura) throws BusinessException {
 		String idTrn = getCurrentTimeStamp() + String.format("%4s", medioDePago.trim()).replace(' ', '0')
 				+ String.format("%9s", nroFactura.trim()).replace(' ', '0');
-		IdTrnDTO idTrnDTO = new IdTrnDTO();
-		idTrnDTO.setIdTrn(idTrn);
-		return idTrnDTO;
+		IdTrnSistarbancDTO idTrnSistarbancDTO = new IdTrnSistarbancDTO();
+		idTrnSistarbancDTO.setIdTrn(idTrn);
+		return idTrnSistarbancDTO;
 	}
 
 	@Override
-	public IdTrnDTO getIdTrnBanred(String medioDePago, String nroFactura) throws BusinessException {
-		IdTrnDTO idTrnDTO = null;
+	public IdTrnBanredDTO getIdTrnBanred(String medioDePago, String nroFactura) throws BusinessException {
+		IdTrnBanredDTO idTrnBanredDTO = null;
 
 		try {
 			String idTransaccion = getCurrentTimeStamp() + String.format("%4s", medioDePago.trim()).replace(' ', '0')
 					+ String.format("%9s", nroFactura.trim()).replace(' ', '0');
 			FirmaElectronicaDTO firmaElectronicaDTO = firmaElectronicaDAO.getFirmaElectronica(idTransaccion);
-			idTrnDTO = new IdTrnDTO();
-			idTrnDTO.setIdTrn(firmaElectronicaDTO.getFirma());
+			idTrnBanredDTO = new IdTrnBanredDTO();
+			idTrnBanredDTO.setIdTrn(idTransaccion);
+			idTrnBanredDTO.setIdTrnFirmado(firmaElectronicaDTO.getFirma());
 		} catch (PersistException e) {
 			procesarPersistException(e, "Error en negocio getIdTrnBanred");
 		}
 
-		return idTrnDTO;
+		return idTrnBanredDTO;
 	}
 
 	@Override
