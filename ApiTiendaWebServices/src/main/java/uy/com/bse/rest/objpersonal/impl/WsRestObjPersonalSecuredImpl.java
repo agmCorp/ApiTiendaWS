@@ -12,6 +12,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import uy.com.bse.dto.common.FacturaDTO;
 import uy.com.bse.dto.common.IdTrnBanredDTO;
+import uy.com.bse.dto.common.IdTrnRedesDTO;
 import uy.com.bse.dto.common.IdTrnSistarbancDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.FileUploadDTO;
@@ -335,9 +336,10 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 	public Response informarPagoEnRedes(SecurityContext securityContext,
 			ParamInformarPagoEnRedesDTO paramInformarPagoEnRedesDTO) {
 		final String INTERNAL_MESSAGE = "Error en servicio informarPagoEnRedes";
+		IdTrnRedesDTO resp = null;
 
 		try {
-			fachada.informarPagoEnRedes(getUserLoggedIn(securityContext), paramInformarPagoEnRedesDTO.getMedioDePago(),
+			resp = fachada.informarPagoEnRedes(getUserLoggedIn(securityContext), paramInformarPagoEnRedesDTO.getMedioDePago(),
 					paramInformarPagoEnRedesDTO.getNroFactura(),
 					Long.valueOf(paramInformarPagoEnRedesDTO.getDocumentId()), paramInformarPagoEnRedesDTO.getCodProd(),
 					paramInformarPagoEnRedesDTO.getDescProducto(),
@@ -353,6 +355,6 @@ public class WsRestObjPersonalSecuredImpl extends WsRestObjPersonalBase implemen
 			throw procesarException(e, INTERNAL_MESSAGE);
 		}
 
-		return getResponseOK(new Object());
+		return getResponseOK(resp);
 	}
 }

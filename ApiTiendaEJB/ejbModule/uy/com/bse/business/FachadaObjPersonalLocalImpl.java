@@ -13,6 +13,7 @@ import uy.com.bse.business.support.LoggingBusinessInterceptorBinding;
 import uy.com.bse.dto.common.CodigueraDTO;
 import uy.com.bse.dto.common.FacturaDTO;
 import uy.com.bse.dto.common.IdTrnBanredDTO;
+import uy.com.bse.dto.common.IdTrnRedesDTO;
 import uy.com.bse.dto.common.IdTrnSistarbancDTO;
 import uy.com.bse.dto.firmaelectronica.FirmaElectronicaDTO;
 import uy.com.bse.dto.mibse.NumeroClienteDTO;
@@ -304,9 +305,11 @@ public class FachadaObjPersonalLocalImpl extends Fachada implements FachadaObjPe
 	}
 
 	@Override
-	public void informarPagoEnRedes(String userLoggedIn, String medioDePago, String nroFactura, Long documentId, String codProd, String descProducto,
+	public IdTrnRedesDTO informarPagoEnRedes(String userLoggedIn, String medioDePago, String nroFactura, Long documentId, String codProd, String descProducto,
 			Integer codRamo, String descRamo, Integer nroPoliza, Integer nroCertificado, String tipoDocumento,
 			String nroDocumento, String nombres, String apellidos) throws BusinessException {
+		IdTrnRedesDTO idTrnRedesDTO = null;
+		
 		try {
 			SeguridadServiciosDTO seguridadServiciosDTO = seguridadServiciosDAO.login(userLoggedIn);
 			String idTransaccion = getCurrentTimeStamp() + String.format("%4s", medioDePago.trim()).replace(' ', '0')
@@ -315,8 +318,12 @@ public class FachadaObjPersonalLocalImpl extends Fachada implements FachadaObjPe
 					codProd, descProducto, codRamo, descRamo, nroPoliza, nroCertificado, tipoDocumento, nroDocumento,
 					nombres, apellidos);
 			seguridadServiciosDAO.logout(userLoggedIn, seguridadServiciosDTO.getToken());
+			idTrnRedesDTO = new IdTrnRedesDTO();
+			idTrnRedesDTO.setIdTrn(idTransaccion);
 		} catch (PersistException e) {
 			procesarPersistException(e, "Error en negocio adherirFacturaDigital");
 		}
+		
+		return idTrnRedesDTO;
 	}
 }
