@@ -19,10 +19,11 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="carril" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="descripcionMsg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="estadoMsg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="etapa" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="etapa" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="finalMsg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="futuroMsg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="idMsg" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="tiempoPromedio" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="tituloMsg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="titulofuturoMsg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -42,6 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "finalMsg",
     "futuroMsg",
     "idMsg",
+    "tiempoPromedio",
     "tituloMsg",
     "titulofuturoMsg"
 })
@@ -52,10 +54,11 @@ public class ResultObtenerMapaMsgSiniestro
     protected int carril;
     protected String descripcionMsg;
     protected String estadoMsg;
-    protected int etapa;
+    protected String etapa;
     protected String finalMsg;
     protected String futuroMsg;
     protected int idMsg;
+    protected String tiempoPromedio;
     protected String tituloMsg;
     protected String titulofuturoMsg;
 
@@ -126,16 +129,24 @@ public class ResultObtenerMapaMsgSiniestro
     /**
      * Obtiene el valor de la propiedad etapa.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getEtapa() {
+    public String getEtapa() {
         return etapa;
     }
 
     /**
      * Define el valor de la propiedad etapa.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setEtapa(int value) {
+    public void setEtapa(String value) {
         this.etapa = value;
     }
 
@@ -201,6 +212,30 @@ public class ResultObtenerMapaMsgSiniestro
      */
     public void setIdMsg(int value) {
         this.idMsg = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad tiempoPromedio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTiempoPromedio() {
+        return tiempoPromedio;
+    }
+
+    /**
+     * Define el valor de la propiedad tiempoPromedio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTiempoPromedio(String value) {
+        this.tiempoPromedio = value;
     }
 
     /**

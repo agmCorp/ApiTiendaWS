@@ -53,6 +53,7 @@ import javax.xml.bind.annotation.XmlType;
     ResultObtenerMailCliente.class,
     ResultExisteCliente.class,
     ResultLogActividadMibseWsExt.class,
+    ResultCorrespondeCartaPoliza.class,
     ResultInformarPagoBancario.class,
     ResultObtenerNumeroCliente.class,
     ResultValidarCertificadoLibreDeudaADT.class

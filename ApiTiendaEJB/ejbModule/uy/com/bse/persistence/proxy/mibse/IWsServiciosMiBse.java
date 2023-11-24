@@ -471,4 +471,32 @@ public interface IWsServiciosMiBse {
         @WebParam(name = "arg0", targetNamespace = "")
         ParamObtenerMapaMsgSiniestro arg0);
 
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns uy.com.bse.persistence.proxy.mibse.ResultProCarta
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "proCarta2", targetNamespace = "http://ws.mibse.bse.com.uy/", className = "uy.com.bse.persistence.proxy.mibse.ProCarta2")
+    @ResponseWrapper(localName = "proCarta2Response", targetNamespace = "http://ws.mibse.bse.com.uy/", className = "uy.com.bse.persistence.proxy.mibse.ProCarta2Response")
+    public ResultProCarta proCarta2(
+        @WebParam(name = "arg0", targetNamespace = "")
+        ParamProCarta2 arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns uy.com.bse.persistence.proxy.mibse.ResultCorrespondeCartaPoliza
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "correspondeCartaPoliza", targetNamespace = "http://ws.mibse.bse.com.uy/", className = "uy.com.bse.persistence.proxy.mibse.CorrespondeCartaPoliza")
+    @ResponseWrapper(localName = "correspondeCartaPolizaResponse", targetNamespace = "http://ws.mibse.bse.com.uy/", className = "uy.com.bse.persistence.proxy.mibse.CorrespondeCartaPolizaResponse")
+    public ResultCorrespondeCartaPoliza correspondeCartaPoliza(
+        @WebParam(name = "arg0", targetNamespace = "")
+        ParamCorrespondeCartaPoliza arg0);
+
 }

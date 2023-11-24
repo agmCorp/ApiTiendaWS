@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "WsServiciosMiBse", targetNamespace = "http://ws.mibse.bse.com.uy/", wsdlLocation = "http://jboss-test01:9080/ServiciosMiBSEWS/WsServiciosMiBse?wsdl")
+@WebServiceClient(name = "WsServiciosMiBse", targetNamespace = "http://ws.mibse.bse.com.uy/", wsdlLocation = "http://jboss-test.bse.com.uy:9080/ServiciosMiBSEWS/WsServiciosMiBse?wsdl")
 public class WsServiciosMiBse
     extends Service
 {
@@ -30,7 +30,7 @@ public class WsServiciosMiBse
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://jboss-test01:9080/ServiciosMiBSEWS/WsServiciosMiBse?wsdl");
+            url = new URL("http://jboss-test.bse.com.uy:9080/ServiciosMiBSEWS/WsServiciosMiBse?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

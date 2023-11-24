@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlType;
     "usuario"
 })
 @XmlSeeAlso({
+    ParamProCarta2 .class,
     ParamSubirArchivo.class,
     ParamAltaMailCliente.class,
     ParamLogActividadMibseWsExt.class,
@@ -50,6 +51,7 @@ import javax.xml.bind.annotation.XmlType;
     ParamObtenerPolizasFacturasPagasCliente.class,
     ParamOlvidoClave.class,
     ParamAdherirFacturaDigital.class,
+    ParamCorrespondeCartaPoliza.class,
     ParamObtenerComunicacionesCliente.class,
     ParamModificarMailCliente.class,
     ParamListaProfesiones.class,

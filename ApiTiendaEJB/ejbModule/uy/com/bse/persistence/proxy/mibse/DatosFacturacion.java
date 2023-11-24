@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="codProducto" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="codRamo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="codSucursal" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="datosADT" type="{http://ws.mibse.bse.com.uy/}datosPolizaADT" minOccurs="0"/>
  *         &lt;element name="descProducto" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descRamo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -41,6 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "datosFacturacion", propOrder = {
     "codProducto",
     "codRamo",
+    "codSucursal",
     "datosADT",
     "descProducto",
     "descRamo",
@@ -54,6 +56,7 @@ public class DatosFacturacion {
 
     protected String codProducto;
     protected Integer codRamo;
+    protected Integer codSucursal;
     protected DatosPolizaADT datosADT;
     protected String descProducto;
     protected String descRamo;
@@ -110,6 +113,30 @@ public class DatosFacturacion {
      */
     public void setCodRamo(Integer value) {
         this.codRamo = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad codSucursal.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getCodSucursal() {
+        return codSucursal;
+    }
+
+    /**
+     * Define el valor de la propiedad codSucursal.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setCodSucursal(Integer value) {
+        this.codSucursal = value;
     }
 
     /**

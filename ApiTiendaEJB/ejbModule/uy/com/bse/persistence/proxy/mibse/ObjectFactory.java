@@ -41,13 +41,16 @@ public class ObjectFactory {
     private final static QName _ObtenerMaximoEndoso_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerMaximoEndoso");
     private final static QName _ObtenerMailsEnvioFacturaCliente_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerMailsEnvioFacturaCliente");
     private final static QName _ActualizarFacturacionPolizaTodoResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "actualizarFacturacionPolizaTodoResponse");
+    private final static QName _CorrespondeCartaPolizaResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "correspondeCartaPolizaResponse");
     private final static QName _OlvidoClave_QNAME = new QName("http://ws.mibse.bse.com.uy/", "olvidoClave");
+    private final static QName _ProCarta2Response_QNAME = new QName("http://ws.mibse.bse.com.uy/", "proCarta2Response");
     private final static QName _ValidarCertificadoLibreDeudaADT_QNAME = new QName("http://ws.mibse.bse.com.uy/", "validarCertificadoLibreDeudaADT");
     private final static QName _ModificarMailClienteResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "modificarMailClienteResponse");
     private final static QName _ListaTipoDocumentosResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "listaTipoDocumentosResponse");
     private final static QName _ActualizarFacturacionPolizaTodo_QNAME = new QName("http://ws.mibse.bse.com.uy/", "actualizarFacturacionPolizaTodo");
     private final static QName _BorrarMailClienteResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "borrarMailClienteResponse");
     private final static QName _ObtenerNumeroCliente_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerNumeroCliente");
+    private final static QName _ProCarta2_QNAME = new QName("http://ws.mibse.bse.com.uy/", "proCarta2");
     private final static QName _ObtenerPolizasClienteResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerPolizasClienteResponse");
     private final static QName _AdherirFacturaDigitalResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "adherirFacturaDigitalResponse");
     private final static QName _ObtenerSeudoMailCliente_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerSeudoMailCliente");
@@ -85,6 +88,7 @@ public class ObjectFactory {
     private final static QName _ObtenerMapaMsgSiniestro_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerMapaMsgSiniestro");
     private final static QName _OlvidoClaveResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "olvidoClaveResponse");
     private final static QName _InformarPagoBancarioResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "informarPagoBancarioResponse");
+    private final static QName _CorrespondeCartaPoliza_QNAME = new QName("http://ws.mibse.bse.com.uy/", "correspondeCartaPoliza");
     private final static QName _InformarPagoRedesResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "informarPagoRedesResponse");
     private final static QName _ObtenerNumeroClienteResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerNumeroClienteResponse");
     private final static QName _ObtenerPolizasFacturasPagasClienteResponse_QNAME = new QName("http://ws.mibse.bse.com.uy/", "obtenerPolizasFacturasPagasClienteResponse");
@@ -302,6 +306,14 @@ public class ObjectFactory {
      */
     public AltaMailClienteResponse createAltaMailClienteResponse() {
         return new AltaMailClienteResponse();
+    }
+
+    /**
+     * Create an instance of {@link CorrespondeCartaPoliza }
+     * 
+     */
+    public CorrespondeCartaPoliza createCorrespondeCartaPoliza() {
+        return new CorrespondeCartaPoliza();
     }
 
     /**
@@ -529,6 +541,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ProCarta2Response }
+     * 
+     */
+    public ProCarta2Response createProCarta2Response() {
+        return new ProCarta2Response();
+    }
+
+    /**
      * Create an instance of {@link ValidarCertificadoLibreDeudaADT }
      * 
      */
@@ -542,6 +562,14 @@ public class ObjectFactory {
      */
     public ActualizarFacturacionPolizaTodoResponse createActualizarFacturacionPolizaTodoResponse() {
         return new ActualizarFacturacionPolizaTodoResponse();
+    }
+
+    /**
+     * Create an instance of {@link CorrespondeCartaPolizaResponse }
+     * 
+     */
+    public CorrespondeCartaPolizaResponse createCorrespondeCartaPolizaResponse() {
+        return new CorrespondeCartaPolizaResponse();
     }
 
     /**
@@ -566,6 +594,14 @@ public class ObjectFactory {
      */
     public ObtenerMailsEnvioFacturaCliente createObtenerMailsEnvioFacturaCliente() {
         return new ObtenerMailsEnvioFacturaCliente();
+    }
+
+    /**
+     * Create an instance of {@link ProCarta2 }
+     * 
+     */
+    public ProCarta2 createProCarta2() {
+        return new ProCarta2();
     }
 
     /**
@@ -614,6 +650,14 @@ public class ObjectFactory {
      */
     public ResultObtenerDatosValidadosCliente createResultObtenerDatosValidadosCliente() {
         return new ResultObtenerDatosValidadosCliente();
+    }
+
+    /**
+     * Create an instance of {@link ParamProCarta2 }
+     * 
+     */
+    public ParamProCarta2 createParamProCarta2() {
+        return new ParamProCarta2();
     }
 
     /**
@@ -929,6 +973,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ParamCorrespondeCartaPoliza }
+     * 
+     */
+    public ParamCorrespondeCartaPoliza createParamCorrespondeCartaPoliza() {
+        return new ParamCorrespondeCartaPoliza();
+    }
+
+    /**
      * Create an instance of {@link ParamObtenerComunicacionesCliente }
      * 
      */
@@ -1078,6 +1130,14 @@ public class ObjectFactory {
      */
     public ParamValidarCodigoAdhesion createParamValidarCodigoAdhesion() {
         return new ParamValidarCodigoAdhesion();
+    }
+
+    /**
+     * Create an instance of {@link ResultCorrespondeCartaPoliza }
+     * 
+     */
+    public ResultCorrespondeCartaPoliza createResultCorrespondeCartaPoliza() {
+        return new ResultCorrespondeCartaPoliza();
     }
 
     /**
@@ -1290,12 +1350,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CorrespondeCartaPolizaResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mibse.bse.com.uy/", name = "correspondeCartaPolizaResponse")
+    public JAXBElement<CorrespondeCartaPolizaResponse> createCorrespondeCartaPolizaResponse(CorrespondeCartaPolizaResponse value) {
+        return new JAXBElement<CorrespondeCartaPolizaResponse>(_CorrespondeCartaPolizaResponse_QNAME, CorrespondeCartaPolizaResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link OlvidoClave }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://ws.mibse.bse.com.uy/", name = "olvidoClave")
     public JAXBElement<OlvidoClave> createOlvidoClave(OlvidoClave value) {
         return new JAXBElement<OlvidoClave>(_OlvidoClave_QNAME, OlvidoClave.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ProCarta2Response }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mibse.bse.com.uy/", name = "proCarta2Response")
+    public JAXBElement<ProCarta2Response> createProCarta2Response(ProCarta2Response value) {
+        return new JAXBElement<ProCarta2Response>(_ProCarta2Response_QNAME, ProCarta2Response.class, null, value);
     }
 
     /**
@@ -1350,6 +1428,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.mibse.bse.com.uy/", name = "obtenerNumeroCliente")
     public JAXBElement<ObtenerNumeroCliente> createObtenerNumeroCliente(ObtenerNumeroCliente value) {
         return new JAXBElement<ObtenerNumeroCliente>(_ObtenerNumeroCliente_QNAME, ObtenerNumeroCliente.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ProCarta2 }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mibse.bse.com.uy/", name = "proCarta2")
+    public JAXBElement<ProCarta2> createProCarta2(ProCarta2 value) {
+        return new JAXBElement<ProCarta2>(_ProCarta2_QNAME, ProCarta2 .class, null, value);
     }
 
     /**
@@ -1683,6 +1770,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.mibse.bse.com.uy/", name = "informarPagoBancarioResponse")
     public JAXBElement<InformarPagoBancarioResponse> createInformarPagoBancarioResponse(InformarPagoBancarioResponse value) {
         return new JAXBElement<InformarPagoBancarioResponse>(_InformarPagoBancarioResponse_QNAME, InformarPagoBancarioResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CorrespondeCartaPoliza }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.mibse.bse.com.uy/", name = "correspondeCartaPoliza")
+    public JAXBElement<CorrespondeCartaPoliza> createCorrespondeCartaPoliza(CorrespondeCartaPoliza value) {
+        return new JAXBElement<CorrespondeCartaPoliza>(_CorrespondeCartaPoliza_QNAME, CorrespondeCartaPoliza.class, null, value);
     }
 
     /**
